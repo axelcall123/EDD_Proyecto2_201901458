@@ -1,0 +1,31 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+
+/*MENU*/
+.center-text {
+    text-align: center;
+}
+.i-form-center {
+    font-size: 100px;
+    text-align: center;
+}
+.b-degradaint {
+    border-radius: 12px;
+    background: rgb(36, 0, 17);
+    background: linear-gradient(90deg, rgba(36, 0, 17, 0.9953703703703703) 0%, rgba(90, 9, 121, 0.9375) 35%, rgba(255, 0, 209, 0.8402777777777778) 100%);
+    color: white;
+    width: 100%;
+    margin: 15px 15px 15px 15px;
+}
+.b-out{
+    border: 0px;
+    background-color: transparent;
+    transition: background-color 2s ease-out 100ms;
+    border-radius: 12px;
+}
+.b-out{
+    background: rgba(90, 9, 121, 0.9375);
+    color: white;
+}
+.d-scroll{
+    overflow-y: scroll;
+}

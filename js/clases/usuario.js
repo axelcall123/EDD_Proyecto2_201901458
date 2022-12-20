@@ -27,3 +27,12 @@ export class Usuario {
         this.admin = admin
     }
 }
+/*export class Usuario {
+    constructor() {
+    }
+    GetDatos() {
+        return {}
+    }
+    SetAll() {
+    }
+}*/

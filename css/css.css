@@ -1,9 +1,11 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
-
-/*MENU*/
 .center-text {
     text-align: center;
 }
+.justify-text{
+    text-align: justify;
+}
+/*MENU*/
 .i-form-center {
     font-size: 100px;
     text-align: center;
@@ -28,4 +30,66 @@
 }
 .d-scroll{
     overflow-y: scroll;
+}
+.float-r{
+    float: right;
+}
+.my-btn-u{
+    background-color: blueviolet;
+    color: white;
+    border-radius: 75px;
+    border:none;
+    padding:15px;
+}
+.my-btn-u:hover {
+    background: rgb(115, 0, 185);
+        background: linear-gradient(90deg, rgba(115, 0, 185, 1) 0%, rgb(120, 26, 179) 38%, rgb(166, 120, 195) 99%);
+    color: white;
+    border-radius: 75px;
+    border: none;
+    padding: 15px;
+}
+.my-btn-u:active{
+    box-shadow: 0 5px #666;
+    transform: translateX(4px);
+}
+.my-btn-d{
+    border: none;
+    border-radius: 10px;
+    width: 110px;
+    height: 40px;
+    background-color: inherit;
+    margin-bottom: 5px;
+}
+.my-btn-d:hover {
+    box-shadow: 0 5px black;
+    border-radius:2px solid rgb(185, 24, 24);
+}
+#b-m-descargar{
+    border: none;
+    border-radius: 10px;
+    background: rgb(255, 187, 0);
+}
+/*MAIN*/
+.titulo-pelicula{
+    border-style: double;
+    width: 130px;
+}
+.b-m-pay{
+    background-color: blueviolet;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    height: 50px;
+}
+.starY{
+    color: yellow;
+    text-align: left;
+}
+.starB {
+    color: black;
+    text-align: left;
+}
+input.puntuacion{
+    width: 50px;
 }

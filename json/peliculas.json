@@ -1,0 +1,29 @@
+[
+    {
+    "id_pelicula" : 1,
+    "nombre_pelicula" : "n1",
+    "descripcion":"d1",
+    "puntuacion" : 1,
+    "precion_Q" : 1,
+    "paginas" : 1,
+    "categoria" : "c1"
+    },
+    {
+        "id_pelicula": 2,
+        "nombre_pelicula": "n2",
+        "descripcion": "d2",
+        "puntuacion": 2,
+        "precion_Q": 2,
+        "paginas": 2,
+        "categoria": "c2"
+    },
+    {
+        "id_pelicula": 3,
+        "nombre_pelicula": "n3",
+        "descripcion": "d3",
+        "puntuacion": 3,
+        "precion_Q": 3,
+        "paginas": 3,
+        "categoria": "c3"
+    }
+]

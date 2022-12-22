@@ -29,7 +29,6 @@ export class listaSimple {
         }
         this.tamano++;
     }
-
     push(info) {
         this.insertarP(info)
     }
@@ -74,5 +73,46 @@ export class listaSimple {
     tam() {
         return this.tamano
     }
+    //SOLO PARA EL LOGIN
+    buscar(user, pass) {// json
+        var aux = this.primero;
+        while (aux != null && user != aux.info.GetDatos()["nombre_usuario"]) {
+            //lista.info.usuario
+            aux = aux.siguiente;
+        }
+        if (aux == null) {//LLEGO FINAL
+            return {TF: false, nodo: null }
+        } else if (pass == aux.info.GetDatos()["contrasenia"]) {//USUARIO Y CONTRA
+            return {TF: true, nodo: aux }
+        }//CONTRASEÑA MAL | ES NO ES ADMIN
+        return { TF: false, nodo: aux }
+    }
+    graphviz() {
+        let aux = this.primero
 
+        let box = "shape=box"
+
+        let contNodo = ""//nodo_1[]
+        let unionNodo = ""//nodo_1->nodo->2
+        let cont = 0
+        while (aux != null) {
+            let dpi = aux.info.GetDatos()["dpi"]
+            let user = aux.info.GetDatos()["nombre_completo"]
+            let pass = aux.info.GetDatos()["contrasenia"]
+            contNodo = contNodo + `nodo_${cont} [${box} label="dpi:${dpi}\nus:${user}\npass:${pass}"]\n`
+            if (cont < this.tamano - 1) {
+                unionNodo = unionNodo + `nodo_${cont}->`
+            } else {
+                unionNodo = unionNodo + `nodo_${cont}\n`
+            }
+            cont++
+            aux = aux.siguiente
+        }
+        let contenido = contNodo + unionNodo
+        let codigodot = `digraph {
+            rankdir=LR
+            ${contenido}
+        }`
+        return codigodot
+    }
 }

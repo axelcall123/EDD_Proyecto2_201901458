@@ -11,19 +11,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/css.css">
 
-    <title>Admin</title>
+    <title>main</title>
 </head>
 
 <body>
-    <div class="container" id="d-main">
+    <!--PAGINA PRINCIPAL-->
+    <div class="container" id="d-main-page">
         <!--MAIN-->
         <div class="row" id="d-m-main">
             <div class="col-sm-5">
                 <div class="input-group">
-                    <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                        <option selected>Choose...</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
+                    <select class="custom-select" id="s-input" aria-label="Example select with button addon">
+                        <!--option selected>Choose...</option-->
+                        <option value="1" selected>AZ</option>
+                        <option value="2">ZA</option>
                     </select>
                     <div class="input-group-append">
                         <button class="my-btn-d" type="button">Button</button>
@@ -35,40 +36,43 @@
                 <button class="my-btn-d">Ver Actores</button>
                 <button class="my-btn-d">Ver Categorias</button>
             </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="titulo-pelicula center-text">
-                            TITULO:
-                            PELICULA
+            <div class="row" id="d-mm-pel">
+                <!--PELIS-->
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="titulo-pelicula center-text">
+                                TITULO:
+                                PELICULA
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-5 justify-text">
-                        <p><b>DES:</b>123</p>
-    
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <button class="b-m-pay">
-                                    <i class="bi bi-info-circle-fill"></i>
-                                    info
-                                </button>
-    
-                            </div>
-                            <div class="col-sm-4">
-                                <button class="b-m-pay">
-                                    <i class="bi bi-bag-check-fill"></i>
-                                    alquilar
-                                </button>
-                            </div>
-                            <div class="col-sm-4">
-                                Q00.00
+                        <div class="col-sm-5 justify-text">
+                            <p><b>DES:</b>123</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button class="b-m-pay">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                        info
+                                    </button>
+                
+                                </div>
+                                <div class="col-sm-4">
+                                    <button class="b-m-pay">
+                                        <i class="bi bi-bag-check-fill"></i>
+                                        alquilar
+                                    </button>
+                                </div>
+                                <div class="col-sm-4">
+                                    Q00.00
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 

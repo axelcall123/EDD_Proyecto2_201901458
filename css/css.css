@@ -54,10 +54,8 @@
     transform: translateX(4px);
 }
 .my-btn-d{
-    border: none;
     border-radius: 10px;
     width: 110px;
-    height: 40px;
     background-color: inherit;
     margin-bottom: 5px;
 }
@@ -66,7 +64,6 @@
     border-radius:2px solid rgb(185, 24, 24);
 }
 #b-m-descargar{
-    border: none;
     border-radius: 10px;
     background: rgb(255, 187, 0);
 }
@@ -82,6 +79,14 @@
     border: none;
     height: 50px;
 }
+.b-m-pay:hover{
+    background-color: blueviolet;
+    color: black;
+}
+.b-m-pay:active {
+    color: black;
+    border: solid 1px black;
+}
 .starY{
     color: yellow;
     text-align: left;
@@ -92,4 +97,24 @@
 }
 input.puntuacion{
     width: 50px;
+}
+/*NAV*/
+#nav {
+    background: rgb(115, 0, 185);
+    background: linear-gradient(90deg, rgba(191, 110, 241, 1) 0%, rgba(115, 0, 185, 1) 38%, rgba(138, 39, 198, 1) 99%);
+}
+
+.navBtn {
+    color: white;
+    margin: 5px;
+}
+.navBtn:hover {
+    border-bottom: 2px solid black;
+}
+.anav {
+    color: white;
+}
+
+.anav:hover {
+    color: white;
 }

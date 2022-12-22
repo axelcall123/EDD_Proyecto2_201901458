@@ -1,12 +1,14 @@
-export class Usuario {
+import { listaSimple } from "../nodo_lista/lSimple.js"
+export class Pelicula {
     constructor(id_pelicula,nombre_pelicula,descripcion,puntuacion,precion_Q,paginas,categoria) {
         this.id_pelicula = id_pelicula
         this.nombre_pelicula = nombre_pelicula
-        this.descripcion=descripcion
+        this.descripcion = descripcion
         this.puntuacion = puntuacion
         this.precion_Q = precion_Q
         this.paginas = paginas
         this.categoria = categoria
+        this.comentario=new listaSimple()
     }
     GetDatos() {
         return {
@@ -18,5 +20,17 @@ export class Usuario {
         paginas:this.paginas,
         categoria:this.categoria
         }
+    }
+    SetAll(id_pelicula, nombre_pelicula, descripcion, puntuacion, precion_Q, paginas, categoria) {
+        this.id_pelicula = id_pelicula
+        this.nombre_pelicula = nombre_pelicula
+        this.descripcion = descripcion
+        this.puntuacion = puntuacion
+        this.precion_Q = precion_Q
+        this.paginas = paginas
+        this.categoria = categoria
+    }
+    SetPuntuacion(puntuacion){
+        this.puntuacion=puntuacion
     }
 }

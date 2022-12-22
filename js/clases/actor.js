@@ -1,4 +1,4 @@
-export class Usuario {
+export class Actor {
     constructor(dni,nombre_actor,correo,descripcion) {
         this.dni = dni
         this.nombre_actor = nombre_actor
@@ -12,5 +12,11 @@ export class Usuario {
             correo : this.correo,
             descripcion : this.descripcion
         }
+    }
+    SetAll(dni,nombre_actor,correo,descripcion) {
+        this.dni = dni
+        this.nombre_actor = nombre_actor
+        this.correo = correo
+        this.descripcion = descripcion
     }
 }

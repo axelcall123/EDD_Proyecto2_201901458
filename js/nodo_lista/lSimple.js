@@ -115,4 +115,11 @@ export class listaSimple {
         }`
         return codigodot
     }
+    mostrar(nodo){//muestra uno a uno para
+        if(nodo==null){
+            return this.ultimo
+        }else{
+            return nodo.siguiente
+        }
+    }
 }

@@ -1,5 +1,6 @@
 import { NodoB } from "./Nodo.js"
 import { listaSimple } from "./lSimple.js"
+import { Estrella } from "../func/func.js"
 export class AVL {
     constructor() {
         this.raiz = null
@@ -15,13 +16,13 @@ export class AVL {
         else if (info.GetDatos()["id_pelicula"] < tmp.info.GetDatos()["id_pelicula"]) {
             tmp.izquierda = this.add(info, tmp.derecha)
             if ((this.tam(tmp.izquierda) - this.tam(tmp.derecha)) == 2) {
-                if (info < tmp.izquierda.info) tmp = this.srl(tmp)
+                if (info.GetDatos()["id_pelicula"] < tmp.izquierda.info.GetDatos()["id_pelicula"]) tmp = this.srl(tmp)
                 else tmp = this.drl(tmp)
             }
-        } else if (info > tmp.info) {
+        } else if (info.GetDatos()["id_pelicula"] > tmp.info.GetDatos()["id_pelicula"]) {
             tmp.derecha = this.add(info, tmp.derecha)
             if ((this.tam(tmp.derecha) - this.tam(tmp.izquierda)) == 2) {
-                if (info > tmp.derecha.info) tmp = this.srr(tmp)
+                if (info.GetDatos()["id_pelicula"] > tmp.derecha.info.GetDatos()["id_pelicula"]) tmp = this.srr(tmp)
                 else tmp = this.drr(tmp)
             }
         }
@@ -49,9 +50,9 @@ export class AVL {
         t2.peso = max(this.tam(t2.izquierda), t1.peso) + 1
         return t2
     }
-    drl(tmp) {
-        tmp.izquierda = this.srr(tmp.izquierda)
-        return this.srl(tmp)
+    drl(nodo) {
+        nodo.izquierda = this.srr(nodo.izquierda)
+        return this.srl(nodo)
     }
     srr(t1) {
         var t2
@@ -62,38 +63,38 @@ export class AVL {
         t2.peso = this.max(this.tam(t2.derecha), t1.peso) + 1
         return t2
     }
-    drr(tmp) {
-        tmp.derecha = this.srl(tmp.derecha)
-        return this.srr(tmp)
+    drr(nodo) {
+        nodo.derecha = this.srl(nodo.derecha)
+        return this.srr(nodo)
     }
     preorden(){
         this.pre_orden(this.raiz)
     }
     pre_orden(nodo) {
-        if (tmp != null) {
-            console.log(tmp.info)
-            this.preorden(tmp.izquierda)
-            this.preorden(tmp.derecha)
+        if (nodo != null) {
+            console.log(nodo.info)
+            this.preorden(nodo.izquierda)
+            this.preorden(nodo.derecha)
         }
     }
     inorden() {
         this.in_orden(this.raiz)
     }
     in_orden(nodo) {
-        if (tmp != null) {
-            this.inorden(tmp.izquierda)
-            console.log(tmp.info)
-            this.inorden(tmp.derecha)
+        if (nodo != null) {
+            this.inorden(nodo.izquierda)
+            console.log(nodo.info)
+            this.inorden(nodo.derecha)
         }
     }
     postorden() {
         this.pos_torden(this.raiz)
     }
     pos_torden(nodo) {
-        if (tmp != null) {
-            this.postorden(tmp.izquierda)
-            this.postorden(tmp.derecha)
-            console.log(tmp.info)
+        if (nodo != null) {
+            this.postorden(nodo.izquierda)
+            this.postorden(nodo.derecha)
+            console.log(nodo.info)
         }
     }
     graphviz() {
@@ -127,8 +128,10 @@ export class AVL {
         return codigodot
     }
     GetHtml(){
-        let elementoL1 = new listaSimple()//<>
-        let elementoL2 = new listaSimple()//<>
+        let elementoL1 =new listaSimple()//<main page>
+        let elementoL2 =new listaSimple()//<pelicula punto>
+        let elementoL3 =new listaSimple()//<pelicula comentarios{c1,c2}>
+        let elementoL4 =new listaSimple()//<pelicula publicar>
         let idL=new listaSimple()
         function gNIn_orden(nodo) {
             if (nodo != null) {
@@ -137,50 +140,127 @@ export class AVL {
                 let descripcion = nodo.info.GetDatos()["descripcion"]
                 let precio = nodo.info.GetDatos()["precion_Q"]
                 let id=nodo.info.GetDatos()["id_pelicula"]
-                var elementoT1 = `
-                <div class="col-md-12">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="titulo-pelicula center-text">
-                            TITULO:
-                            ${nombre}
-                        </div>
-                    </div>
-                    <div class="col-sm-5 justify-text">
-                        <p><b>DESCRIPCION:</b>${descripcion}</p>
-                    </div>
-                    <div class="col-sm-4">
+                //main pelis
+                //button main main pelicula info
+                //b-mpp-alq- button main pelicula alquilar
+                var elementoT1 = 
+                `   <div class="col-md-12">
                         <div class="row">
-                            <div class="col-sm-4">
-                                <button class="b-m-pay" id="b-mm-pel-info-${id}">
-                                    <i class="bi bi-info-circle-fill"></i>
-                                    info
-                                </button>
-    
+                            <div class="col-sm-3">
+                                <div class="titulo-pelicula center-text">
+                                    TITULO:
+                                    ${nombre}
+                                </div>
+                            </div>
+                            <div class="col-sm-5 justify-text">
+                                <p><b>DES:</b>${descripcion}</p>
                             </div>
                             <div class="col-sm-4">
-                                <button class="b-m-pay" id="b-mm-pel-alquilar-${id}">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <button class="b-m-pay" id="b-mmp-info-${id}">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                            info
+                                        </button>
+                    
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button class="b-m-pay" id="b-mpp-alq-${id}">
+                                            <i class="bi bi-bag-check-fill"></i>
+                                            alquilar
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        Q0${precio}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+                //puntos estrellas
+                let estrella = Estrella(nodo.info.GetDatos()["puntuacion_star"])
+                //b-mpp-modificar- button main pelicula modificar
+                //b-mpp-alq- button main pelicula alquilar
+                var elementoT2 = 
+                `
+                    <h3 class="center-text">${nombre}</h3>
+                    <p class="justify-text"><b>Descripcion:</b>${descripcion}</p>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button class="my-btn-d" id="b-mpp-modificar-${id}">Modificar puntuacion</button>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" class="puntuacion">
+                            </div>
+                            <div class="col-sm-3">
+                                <p>
+                                    <b class="starY">${estrella["es"]}</b>
+                                    <b class="starB">${estrella["nes"]}</b>
+                                </p>
+                            </div>
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">
+                                <button class="b-m-pay" id="b-mpp-alq-${id}">
                                     <i class="bi bi-bag-check-fill"></i>
                                     alquilar
                                 </button>
+                                <p>Q${precio}</p>
                             </div>
-                            <div class="col-sm-4">
-                                Q${precio}
-                            </div>
+                            <div class="col-sm-3"></div>
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div class="col-sm-3"></div>
                 `
-                var elementoT2 = `
-                    
+                //p publicaciones
+                /*var elementoT3=
+                `
+
+                `*/
+                //i-mpp-publicar- input main pelicula pelicula publicar
+                //b-mpp-publicar- button main pelicula pelicula publicar
+                var elementoT4 =
+                `
+                    <div class="col-md-8">
+                        <input type="text" class="float-r" id="i-mpp-publicar-${id}">
+                    </div>
+                    <div class="col-md-4">
+                        <button class="my-btn-u" id="b-mp-publicar" id="b-mpp-publicar-${id}">Publicar</button>
+                    </div>
                 `
                 idL.insertarP(id)
                 elementoL1.insertarP(elementoT1)
+                elementoL2.insertarP(elementoT2)
+                elementoL3.insertarP(nodo)
+                elementoL4.insertarP(elementoT4)
                 gNIn_orden(nodo.derecha);
             }
         }
         gNIn_orden(this.raiz)
-        return { elementou: elementoL1,id:idL}
+        return { 
+            elementou: elementoL1,
+            elementod:elementoL2,
+            elmenton:elementoL3,
+            elementoc:elementoL4,
+            id:idL
+        }
+    }
+    buscar(id){
+        this._buscar(this.raiz,id)
+    }
+    _buscar(nodo,id){
+        if(nodo!=null){
+            if (id == nodo.info.GetDatos()["id_pelicula"]) {
+                return nodo
+            }
+            else if (id < nodo.info.GetDatos()["id_pelicula"]) {
+                this._buscar(nodo.izquierda)
+            } else if (id > nodo.info.GetDatos()["id_pelicula"]) {
+                this._buscar(nodo.derecha)
+            }
+        }
+        return null
     }
 }

@@ -33,4 +33,6 @@ export class Pelicula {
     SetPuntuacion(puntuacion){
         this.puntuacion=puntuacion
     }
+
+    GetComentario(){return this.comentario}
 }

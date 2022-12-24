@@ -39,7 +39,7 @@ export class Hash{
         this.tam=tamAux*5
         this.llenado=0
         this.serial = false
-        for(var i=0;i<tamAux;i++){
+        for(var i=0;i<tamAux;i++){//recorre arbol lo re incerta
             if (arrayAux[i] != null) {
                 while (arrayAux[i].vacio() != true) {
                     this.incertar(arrayAux[i].pop())

@@ -35,3 +35,17 @@ export function ordenAlfa(str1, str2) {
         return { may: str2, men: str1, stru: 0, strd: 1 }
     }
 }
+export function Estrella(calificacion){
+    let cont=0
+    let cali=""
+    let nCali=""
+    for(var i=0;i<5;i++){
+        if(cont<calificacion){
+            cali = cali +"★"
+        }else{
+            nCali = nCali + "★"
+        }
+        cont++
+    }
+    return {es:cali,nes:nCali}
+}

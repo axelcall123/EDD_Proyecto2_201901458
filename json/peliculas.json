@@ -25,5 +25,23 @@
         "precion_Q": 3,
         "paginas": 3,
         "categoria": "c3"
+    },
+    {
+        "id_pelicula": 4,
+        "nombre_pelicula": "n4",
+        "descripcion": "d4",
+        "puntuacion": 4,
+        "precion_Q": 4,
+        "paginas": 4,
+        "categoria": "c4"
+    },
+    {
+        "id_pelicula": 5,
+        "nombre_pelicula": "n5",
+        "descripcion": "d5",
+        "puntuacion": 5,
+        "precion_Q": 5,
+        "paginas": 5,
+        "categoria": "c5"
     }
 ]

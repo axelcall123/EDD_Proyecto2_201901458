@@ -1,0 +1,42 @@
+[
+    {
+        "dpi":1,
+        "nombre_completo": "C1",
+        "nombre_usuario": "U1",
+        "correo": "C1@gmail.com",
+        "contrasenia": "1",
+        "telefono": "+1"
+    },
+    {
+        "dpi": 2,
+        "nombre_completo": "C2",
+        "nombre_usuario": "U2",
+        "correo": "C2@gmail.com",
+        "contrasenia": "2",
+        "telefono": "+2"
+    },
+    {
+        "dpi": 3,
+        "nombre_completo": "C3",
+        "nombre_usuario": "U3",
+        "correo": "C3@gmail.com",
+        "contrasenia": "3",
+        "telefono": "+3"
+    },
+    {
+        "dpi": 4,
+        "nombre_completo": "C4",
+        "nombre_usuario": "U4",
+        "correo": "C1@gmail.com",
+        "contrasenia": "4",
+        "telefono": "+4"
+    },
+    {
+        "dpi": 5,
+        "nombre_completo": "C5",
+        "nombre_usuario": "U5",
+        "correo": "C5@gmail.com",
+        "contrasenia": "5",
+        "telefono": "+5"
+    }
+]

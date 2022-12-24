@@ -17,54 +17,62 @@
 <body>
 
     
-
+    
     <div class="container" id="d-main">
+        <!--DANGER(NOTA,PUBLICACIONES,PUBLICAR)-->
         <!--PELICULAS-->
         <div class="row" id="d-m-pelicula">
-            <h3 class="center-text">TITULO PELICULA</h3>
-            <p class="justify-text"><b>Descripcion:</b>txt</p>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-9">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <button class="my-btn-d">Modificar puntuacion</button>
+            <div class="row" id="d-mp-punto">
+                <!--NOTA-->
+                <h3 class="center-text">TITULO PELICULA</h3>
+                <p class="justify-text"><b>Descripcion:</b>txt</p>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <button class="my-btn-d">Modificar puntuacion</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="puntuacion">
+                        </div>
+                        <div class="col-sm-3">
+                            <p>
+                                <b class="starY">★★★</b>
+                                <b class="starB">★★</b>
+                            </p>
+                        </div>
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6">
+                            <button class="b-m-pay">
+                                <i class="bi bi-bag-check-fill"></i>
+                                alquilar
+                            </button>
+                            <p>Q 00.00</p>
+                        </div>
+                        <div class="col-sm-3"></div>
                     </div>
-                    <div class="col-sm-3">
-                        <input type="text" class="puntuacion">
-                    </div>
-                    <div class="col-sm-3">
-                        <p>
-                            <b class="starY">★★★</b>
-                            <b class="starB">★★</b>
-                        </p>
-                    </div>
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-6">
-                        <button class="b-m-pay">
-                            <i class="bi bi-bag-check-fill"></i>
-                            alquilar
-                        </button>
-                        <p>Q 00.00</p>
-                    </div>
-                    <div class="col-sm-3"></div>
                 </div>
+                <div class="col-sm-3"></div>
             </div>
-            <div class="col-sm-3"></div>
-    
-            <!--COMENTARIOS-->
-            <h4 class="center-text">comentarios</h4>
-            <div class="col-md-3"></div>
-            <div class="col-md-6" id="d-mp-comentario">
-                <p class="center-text">12312312</p>
-                <p class="center-text">12312123</p>
+            <div class="row" id="d-mp-comentario">
+                <!--COMENTARIOS-->
+                <h4 class="center-text">comentarios</h4>
+                <div class="col-md-3"></div>
+                <div class="col-md-6" id="d-mp-comentario">
+                    <!--PUBLICACIONES-->
+                    <p class="center-text">12312312</p>
+                    <p class="center-text">12312123</p>
+                </div>
+                <div class="col-md-3"></div>
             </div>
-            <div class="col-md-3"></div>
-    
-            <div class="col-md-8" id="">
-                <input type="text" class="float-r">
-            </div>
-            <div class="col-md-4">
-                <button class="my-btn-u">Publicar</button>
+            <div class="row" id="d-mp-publicar">
+                <!--PUBLICAR-->
+                <div class="col-md-8">
+                    <input type="text" class="float-r">
+                </div>
+                <div class="col-md-4">
+                    <button class="my-btn-u" id="b-mp-publicar">Publicar</button>
+                </div>
             </div>
         </div>
     </div>

@@ -29,11 +29,15 @@ ocultoNav.style.display = 'none';
 const ocultoMain = document.getElementById('d-m-main')
 ocultoMain.style.display = 'none';
 
-const ocultoPelicula=document.getElementById('d-m-pelicula')
+const ocultoPelicula = document.getElementById('d-m-pelicula')
 ocultoPelicula.style.display = 'none';
+
 //BOTONES
+    //OUT 
+const btnOutAd = document.getElementById('b-out-admin')
     //MENU-LOGIN
 const btnLogin = document.getElementById('b_login')
+
     //MAIN-FILES
 const btnAFPelicula = document.getElementById('b-a-f-pelicula')
 const btnAFCliente = document.getElementById('b-a-f-cliente')
@@ -66,6 +70,8 @@ btnLogin.addEventListener('click', (e) => {
             ocultoPageLogin.style.display = "none";
             ocultoNav.style.display = 'block';
             ocultoPageMain.style.display = 'block';
+            //display
+            ocultoMain.style.display = 'block';
             //crear dinamicamente todo
             var padre = document.getElementById("d-mm-pel")//elmina hijos
             while (padre.firstChild) {
@@ -73,32 +79,89 @@ btnLogin.addEventListener('click', (e) => {
             }
 
             let listaAux = avPelicula.GetHtml()
-            while (listaAux["id"].vacio()!=true){
+            while (listaAux["id"].vacio()!=true){//peliculas
                 //depliego user por id
                 let idT = listaAux["id"].pop()
                 //despliego <elemento peliculas>
-                document.getElementById("d-mm-pel").insertAdjacentHTML('beforeend', listaAux["elemento"].pop())
-            }
-            //id btn;;info
-            let btnTemp = document.getElementById(`b-mm-pel-info-${idT}`)
-            btnTemp.addEventListener('click', (e) => {
-                //display page peliculas
-                
-            })
-            //id btn;;alquilar
-            btnTemp = document.getElementById(`b-mm-pel-alquilar-${idT}`)
-            btnTemp.addEventListener('click', (e) => {
-                //alquilar
+                document.getElementById("d-mm-pel").insertAdjacentHTML('beforeend', listaAux["elementou"].pop())
+                //comentarios
+                let comentarioL = listaAux["elmenton"].pop()
+                //id btn;;info
+                let btnTemp = document.getElementById(`b-mmp-info-${idT}`)                
+                btnTemp.addEventListener('click', (e) => {
+                    //display page peliculas
+                    var padre = document.getElementById("d-mp-punto")//elimina hijos
+                    while (padre.firstChild) {
+                        padre.firstChild.remove()
+                    }
+                    padre = document.getElementById("d-mp-publicar")//elimina hijos
+                    while (padre.firstChild) {
+                        padre.firstChild.remove()
+                    }
+                    //oculto main
+                    ocultoMain.style.display = 'none';
+                    //muestro peliculas
+                    ocultoPelicula.style.display = 'block';
+                    //puntos estrellas
+                    document.getElementById("d-mp-punto").insertAdjacentHTML('beforeend', listaAux["elementod"].pop())
+                    //input, button publicar
+                    document.getElementById("d-mp-publicar").insertAdjacentHTML('beforeend', listaAux["elementoc"].pop())
+                    //display comentarios
+                    let auxComentario = listaAux["elmenton"].pop()//un nodo con info
+                    let nodo = null
 
-            })
-            //display
-            ocultoMain.style.display = 'block';
+                    padre = document.getElementById("d-mp-comentario")//elimina hijos
+                    while (padre.firstChild) {
+                        padre.firstChild.remove()
+                    }
+                    while (auxComentario.GetComentario().mostrar(nodo) != null) {//mostrar una uno->nodo
+                        nodo = auxComentario.GetComentario().mostrar(nodo)
+                        document.getElementById("d-mp-comentario").insertAdjacentHTML('beforeend', `<p class="center-text">${nodo.info}</p>`)
+                    }
+                    
+                })
+                //id btn;;alquilar
+                btnTemp = document.getElementById(`b-mpp-alq-${idT}`)
+                btnTemp.addEventListener('click', (e) => {
+                    //alquilar
+
+                })
+                /*//id btn;modificar puntuacion
+                btnTemp = document.getElementById(`b-mpp-modificar-${idT}`)
+                btnTemp.addEventListener('click', (e) => {
+                    //modificar
+
+                })
+                //id btn,publicar
+                btnTemp = document.getElementById(`b-mpp-publicar-${idT}`)
+                btnTemp.addEventListener('click', (e) => {
+                    //publicar 
+                    let input = document.getElementById(`b-mmp-alq-${id}`)
+                    comentarioL.info.GetComentario().push(input.value)//comentario                    
+                    padre = document.getElementById("d-mp-comentario")//elimina hijos
+                    while (padre.firstChild) {
+                        padre.firstChild.remove()
+                    }
+                    while (auxComentario.GetComentario().mostrar(nodo) != null) {//mostrar una uno->nodo
+                        nodo = auxComentario.GetComentario().mostrar(nodo)
+                        document.getElementById("d-mp-comentario").insertAdjacentHTML('beforeend', `<p class="center-text">${nodo.info}</p>`)
+                    }
+                })*/
+            }
+            
         }
     } else {//contram,user,admin esta mal
         //no ingreso
     }
 })
+
+
 //FUNCIONES BOTONES
+    //OUT
+btnOutAd.addEventListener('click', (e) => {
+    ocultoPageMaster.style.display = 'none';
+    ocultoPageLogin.style.display = 'block';
+})
     //FILE-PELICULAS
 let inpAFPelicula = document.createElement('input'); inpAFPelicula.type = 'file';
 btnAFPelicula.addEventListener('click', (e) => {
@@ -117,7 +180,7 @@ inpAFPelicula.addEventListener('change', function () {//cambia (e)=> a funciont(
                 element["nombre_pelicula"],
                 element["descripcion"],
                 parseInt(element["puntuacion"]),
-                parseInt(element["precion_Q "]),
+                parseInt(element["precion_Q"]),
                 parseInt(element["paginas"]),
                 element["categoria"]
             )

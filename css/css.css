@@ -5,6 +5,12 @@
 .justify-text{
     text-align: justify;
 }
+.float-r {
+    float: right;
+}
+.float-l {
+    float: left;
+}
 /*MENU*/
 .i-form-center {
     font-size: 100px;
@@ -24,15 +30,15 @@
     transition: background-color 2s ease-out 100ms;
     border-radius: 12px;
 }
-.b-out{
+.b-out:hover{
     background: rgba(90, 9, 121, 0.9375);
     color: white;
 }
+.b-out:active {
+    border:solid black;
+}
 .d-scroll{
     overflow-y: scroll;
-}
-.float-r{
-    float: right;
 }
 .my-btn-u{
     background-color: blueviolet;

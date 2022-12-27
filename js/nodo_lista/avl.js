@@ -4,23 +4,30 @@ import { Estrella } from "../func/func.js"
 export class AVL {
     constructor() {
         this.raiz = null
+        this.id=1
     }
     insertar(info) {
         this.raiz = this.add(info, this.raiz)
+        this.raiz.id=0
     }
     add(info, tmp) {
-        if (tmp == null) { return new NodoB(info) } 
+        if (tmp == null) { return new NodoB(info)} 
         else if (info.GetDatos()["id_pelicula"]==tmp.info.GetDatos()["id_pelicula"]){
             return null
         }
         else if (info.GetDatos()["id_pelicula"] < tmp.info.GetDatos()["id_pelicula"]) {
             tmp.izquierda = this.add(info, tmp.derecha)
+            tmp.izquierda.id=this.id
+            this.id++
+
             if ((this.tam(tmp.izquierda) - this.tam(tmp.derecha)) == 2) {
                 if (info.GetDatos()["id_pelicula"] < tmp.izquierda.info.GetDatos()["id_pelicula"]) tmp = this.srl(tmp)
                 else tmp = this.drl(tmp)
             }
         } else if (info.GetDatos()["id_pelicula"] > tmp.info.GetDatos()["id_pelicula"]) {
             tmp.derecha = this.add(info, tmp.derecha)
+            tmp.derecha.id = this.id
+            this.id++
             if ((this.tam(tmp.derecha) - this.tam(tmp.izquierda)) == 2) {
                 if (info.GetDatos()["id_pelicula"] > tmp.derecha.info.GetDatos()["id_pelicula"]) tmp = this.srr(tmp)
                 else tmp = this.drr(tmp)
@@ -129,9 +136,7 @@ export class AVL {
     }
     GetHtml(){
         let elementoL1 =new listaSimple()//<main page>
-        let elementoL2 =new listaSimple()//<pelicula punto>
-        let elementoL3 =new listaSimple()//<pelicula comentarios{c1,c2}>
-        let elementoL4 =new listaSimple()//<pelicula publicar>
+        
         let idL=new listaSimple()
         function gNIn_orden(nodo) {
             if (nodo != null) {
@@ -178,24 +183,61 @@ export class AVL {
                         </div>
                     </div>
                 `
-                //puntos estrellas
-                let estrella = Estrella(nodo.info.GetDatos()["puntuacion_star"])
-                //b-mpp-modificar- button main pelicula modificar
-                //b-mpp-alq- button main pelicula alquilar
-                var elementoT2 = 
-                `
+                
+                idL.insertarP(id)
+                elementoL1.insertarP(elementoT1)
+                gNIn_orden(nodo.derecha);
+            }
+        }
+        gNIn_orden(this.raiz)
+        return { 
+            elementou: elementoL1,
+            id:idL
+        }
+    }
+    buscar(id){
+        return this._buscar(this.raiz,id)
+    }
+    _buscar(nodo,id){
+        if(nodo!=null){
+            if (id == nodo.info.GetDatos()["id_pelicula"]) {
+                return nodo
+            }
+            else if (id < nodo.info.GetDatos()["id_pelicula"]) {
+                return this._buscar(nodo.izquierda,id)
+            } else if (id > nodo.info.GetDatos()["id_pelicula"]) {
+                return this._buscar(nodo.derecha,id)
+            }
+        }
+        return null
+        
+    }
+    GetHtmlD(id){//van los puntos estrellas
+        let nodo=this.buscar(id)
+        let nombre = nodo.info.GetDatos()["nombre_pelicula"]
+        let descripcion = nodo.info.GetDatos()["descripcion"]
+        let precio = nodo.info.GetDatos()["precion_Q"]
+        let ids = nodo.info.GetDatos()["id_pelicula"]
+
+        //puntos estrellas
+        let estrella = Estrella(nodo.info.GetDatos()["puntuacion_star"])
+        //<pelicula punto>
+        //b-mpp-modificar- button main pelicula modificar
+        //b-mpp-alq- button main pelicula alquilar
+        var elementoT1 =
+            `
                     <h3 class="center-text">${nombre}</h3>
                     <p class="justify-text"><b>Descripcion:</b>${descripcion}</p>
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button class="my-btn-d" id="b-mpp-modificar-${id}">Modificar puntuacion</button>
+                                <button class="my-btn-d" id="b-mpp-modificar-${ids}">Modificar puntuacion</button>
                             </div>
                             <div class="col-sm-3">
-                                <input type="text" class="puntuacion">
-                            </div>
-                            <div class="col-sm-3">
+                                <input type="text" class="puntuacion"  id="i-mpp-es-${ids}">
+                            </div> 
+                            <div class="col-sm-3" id="d-mpp-es-${ids}">
                                 <p>
                                     <b class="starY">${estrella["es"]}</b>
                                     <b class="starB">${estrella["nes"]}</b>
@@ -214,53 +256,26 @@ export class AVL {
                     </div>
                     <div class="col-sm-3"></div>
                 `
-                //p publicaciones
-                /*var elementoT3=
-                `
+        //<pelicula publicar>
+        //i-mpp-publicar- input main pelicula pelicula publicar
+        //b-mpp-publicar- button main pelicula pelicula publicar
+        var elementoT2 =
+        `
+            <div class="col-md-8">
+                <input type="text" class="float-r" id="i-mpp-publicar-${id}">
+            </div>
+            <div class="col-md-4">
+                <button class="my-btn-u" id="b-mp-publicar" id="b-mpp-publicar-${id}">Publicar</button>
+            </div>
+        `
 
-                `*/
-                //i-mpp-publicar- input main pelicula pelicula publicar
-                //b-mpp-publicar- button main pelicula pelicula publicar
-                var elementoT4 =
-                `
-                    <div class="col-md-8">
-                        <input type="text" class="float-r" id="i-mpp-publicar-${id}">
-                    </div>
-                    <div class="col-md-4">
-                        <button class="my-btn-u" id="b-mp-publicar" id="b-mpp-publicar-${id}">Publicar</button>
-                    </div>
-                `
-                idL.insertarP(id)
-                elementoL1.insertarP(elementoT1)
-                elementoL2.insertarP(elementoT2)
-                elementoL3.insertarP(nodo)
-                elementoL4.insertarP(elementoT4)
-                gNIn_orden(nodo.derecha);
-            }
-        }
-        gNIn_orden(this.raiz)
-        return { 
-            elementou: elementoL1,
-            elementod:elementoL2,
-            elmenton:elementoL3,
-            elementoc:elementoL4,
-            id:idL
+        return{
+            elementou:elementoT1,
+            elementod:elementoT2,
+            elementon:nodo
         }
     }
-    buscar(id){
-        this._buscar(this.raiz,id)
-    }
-    _buscar(nodo,id){
-        if(nodo!=null){
-            if (id == nodo.info.GetDatos()["id_pelicula"]) {
-                return nodo
-            }
-            else if (id < nodo.info.GetDatos()["id_pelicula"]) {
-                this._buscar(nodo.izquierda)
-            } else if (id > nodo.info.GetDatos()["id_pelicula"]) {
-                this._buscar(nodo.derecha)
-            }
-        }
-        return null
-    }
+    
 }
+
+//

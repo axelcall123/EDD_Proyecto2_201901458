@@ -18,7 +18,7 @@ export class Hash{
             this.serial=true
         }
         //crear
-        let id=info%this.tam
+        let id = info.GetDatos()["id_categoria"]%this.tam
         if(this.array[id]==null){//crear nuevo
             this.array[id]=new listaSimple()
             this.array[id].insertarU(info)
@@ -46,6 +46,72 @@ export class Hash{
                 }
             }
         }
-        console.log()
+    }
+    graphviz(){
+        let box = "shape=box"
+        let contNodo = ""//nodo_1[]
+        let unionNodoSig = ""//nodo_1->nodo->2
+        let unionNodoAb = ""
+        let rank = "{rank=same"//{rank=same;nodo_1;nodo_2}
+        let pilaUNodoS = new listaSimple()//sig->sig->
+        let pilaRank = new listaSimple()//rank=same
+        for (var i = 0; i < this.tam; i++) {//abajo
+
+            if(this.array[i]==null){//[x]
+                contNodo = contNodo + `nodo_${i} [${box} label="X"]\n`
+                rank=rank+`;nodo_${i}`
+            }else{
+                unionNodoSig = unionNodoSig + `nodo_${i}->`//der
+                contNodo=contNodo+`nodo_${i} [${box} label=" "]\n`
+                rank = rank + `;nodo_${i}`
+
+                let lsAux=this.array[i]
+                let nodo=lsAux.mostrar(null)
+                let cont1 = 0
+                while(nodo!=null){
+                    let company=nodo.info.GetDatos()["company"]
+                    contNodo = contNodo + `nodo_${i}_${cont1} [${box} label="${company}"]\n`
+                    rank = rank + `;nodo_${i}_${cont1}`
+                    nodo = lsAux.mostrar(nodo)
+                    if (nodo!= null) {//ultimo para ver
+                        unionNodoSig = unionNodoSig + `nodo_${i}_${cont1}->`//der
+                    } else {
+                        unionNodoSig = unionNodoSig + `nodo_${i}_${cont1}`//der
+                    }                    
+                    cont1++
+                }
+                
+            }
+
+            rank = rank + "}"
+            if (unionNodoSig!=""){//no haya mucho espacios
+                pilaUNodoS.push(unionNodoSig + "\n")
+            }
+            
+            pilaRank.push(rank + "\n")
+
+            //default
+            rank = "{rank=same"
+            unionNodoSig = ""
+            if (i < this.tam - 1) {//unir abajo
+                unionNodoAb = unionNodoAb + `nodo_${i}->`
+            } else {//evitar errores
+                unionNodoAb = unionNodoAb + `nodo_${i}`
+            }
+            
+        }
+        var union1 = ""
+        while (pilaUNodoS.vacio() != true) {
+            union1 = union1 + pilaUNodoS.pop()
+        }
+        while (pilaRank.vacio() != true) {
+            union1 = union1 + pilaRank.pop()
+        }
+        let contenido = contNodo + union1 + unionNodoAb
+        let codigodot = `digraph {
+            ${contenido}
+        }`
+        console.log(codigodot)
+        return codigodot
     }
 }

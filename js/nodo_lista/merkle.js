@@ -1,45 +1,55 @@
 import { NodoB } from "./Nodo.js";
 import { listaSimple } from "./lSimple.js";
 import { hash } from "../func/func.js";
-class Merkle{
+export class Merkle{
     constructor(){
         this.raiz=null
         this.matriz=new listaSimple()
+        this.id=1
+        this.rootHash=""
     }
     addLS(info){
         this.matriz.insertarU(info)
     }
     crear(){
-        let nivel=1;
-        while(this.matriz.tam()<=Math.pow(2,nivel)){
+        let nivel=0;
+        while(this.matriz.tam()>Math.pow(2,nivel)){
             nivel++
         }
         this.crearT(nivel)
-        let str=this.TopHash(this.raiz)
-        console.log(str)
+        this.rootHash =this.TopHash(this.raiz)
+        //console.log(this.rootHash)
     }
     crearT(nivel){
-        this.raiz=new NodoB("$1")
+        this.raiz=new NodoB("$T")
+        this.raiz.id=this.id
+        this.id++
         this._crearT(nivel,this.raiz)
     }
     _crearT(nivel,nodo){
-        if(nivel>1){
-            nodo.izquierda = new NodoB(`S${nivel}`)
-            nodo.derecha = new NodoB(`S${nivel}`)
-            this._crearT(nivel - 1, nodo.izquierda)
+        if(nivel>=1){
+            nodo.izquierda = new NodoB(`S${nivel}I`)
+            nodo.izquierda.id = this.id
+            this.id++
+            
+            nodo.derecha = new NodoB(`S${nivel}D`)
+            nodo.derecha.id = this.id
+            this.id++
+
             this._crearT(nivel - 1, nodo.derecha)
-        }else if(nivel==1){
+            this._crearT(nivel - 1, nodo.izquierda)
+        }else if(nivel==0){
             if(this.matriz.vacio()!=true){//sacar el hash
-                nodo=new NodoB(this.matriz.pop())
+                nodo.info=this.matriz.pop()
             }else{//si me quede sin hash
-                nodo=new NodoB("0")
+                nodo.info="0"
             }
         }
     }
     TopHash(nodo){//post order iz,der,info
         if(nodo!=null){
-            let strI=this.pos_orden(nodo.izquierda);//return hash
-            let strD=this.pos_orden(nodo.derecha);//return hash
+            let strD = this.TopHash(nodo.derecha);//return hash
+            let strI = this.TopHash(nodo.izquierda);//return hash
             //console.log("Valor:", nodo.info);
             if(nodo.derecha!=null && nodo.izquierda!=null){//hojas superiores
                 nodo.info = hash(strI + strD+nodo.info)
@@ -49,6 +59,39 @@ class Merkle{
                 return nodo.info
             }
         }
+    }
+    graphviz() {
+        let pilaNodo = new listaSimple()//
+        let pilaUnion = new listaSimple()//
+        let box = "shape=box"
+        function gNPre_orden(nodoAnt, nodo) {
+            if (nodo != null) {
+                let hash = nodo.info.substr(0, 6)
+                pilaNodo.push(`nodo_${nodo.id} [${box} label="h:${hash}"]\n`)
+                if (nodoAnt != "") {//dif primer nodo
+                    pilaUnion.push(`${nodoAnt}->nodo_${nodo.id}\n`)
+                }
+                gNPre_orden(`nodo_${nodo.id}`, nodo.izquierda);
+                gNPre_orden(`nodo_${nodo.id}`, nodo.derecha);
+            }
+        }
+        gNPre_orden("", this.raiz)
+        let contNodo = ""//nodo_1[]
+        let unionNodo = ""//nodo_1->nodo->2
+        while (pilaNodo.vacio() != true) {
+            contNodo = contNodo + pilaNodo.pop()
+        }
+        while (pilaUnion.vacio() != true) {
+            unionNodo = unionNodo + pilaUnion.pop()
+        }
+        let contenido = contNodo + unionNodo
+        let codigodot = `digraph {
+            ${contenido}
+        }`
+        return codigodot
+    }
+    GetRoot(){
+        return this.rootHash
     }
 }
 /*

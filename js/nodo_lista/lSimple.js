@@ -87,7 +87,7 @@ export class listaSimple {
         }//CONTRASEÑA MAL | ES NO ES ADMIN
         return { TF: false, nodo: aux }
     }
-    graphviz() {
+    graphvizCt() {
         let aux = this.primero
 
         let box = "shape=box"
@@ -117,9 +117,39 @@ export class listaSimple {
     }
     mostrar(nodo){//muestra uno a uno para
         if(nodo==null){
-            return this.ultimo
+            return this.primero
         }else{
             return nodo.siguiente
         }
+    }
+    GetUltimo(){
+        return this.ultimo.info
+    }
+    graphvizBlock(){
+        aux=this.primero
+        let contNodo =""
+        let unionNodo=""
+        let cont = 0
+        let box = "shape=rectangle"
+        while(aux!=null){
+            var hash=aux.info.GetDatos()["hash"];
+            var prev=aux.info.GetDatos()["prev"];
+            var rootM=aux.info.GetDatos()["root"];
+            var transa = aux.info.GetDatos()["transact"];
+            contNodo = contNodo + `nodo_${cont} [${box} label="hash:${hash}\nprev:${prev}\nroot Merkle:${rootM}\ntransa:${transa}"]\n`
+            if (cont < this.tamano - 1) {
+                unionNodo = unionNodo + `nodo_${cont}->`
+            } else {
+                unionNodo = unionNodo + `nodo_${cont}\n`
+            }
+            cont++
+            aux=aux.siguiente
+        }
+        let contenido = contNodo + unionNodo
+        let codigodot = `digraph {
+            rankdir=LR
+            ${contenido}
+        }`
+        return codigodot
     }
 }

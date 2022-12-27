@@ -1,3 +1,4 @@
+import { HH } from "../clases/hh.js"//TODO:block
 
 export function hash(string) {
     let digest = "password"
@@ -48,4 +49,20 @@ export function Estrella(calificacion){
         cont++
     }
     return {es:cali,nes:nCali}
+}
+
+export function blockChain(index,time,previous,root){
+    let nonce=0
+    let str=""
+    
+    str = hash(index + time + previous + root + nonce)
+    if (str.substr(0, 2)=="00"){//hash si es
+        return str
+    }else{
+        while (str.substr(0, 2) != "00"){//hash sea bueno si no F
+            nonce++
+            str = hash(index + time + previous + root + nonce)
+        }
+        return str
+    }
 }

@@ -1,0 +1,55 @@
+[
+    {
+        "id_categoria":1,
+        "company":"C1"
+    },
+    {
+        "id_categoria": 2,
+        "company": "C2"
+    },
+    {
+        "id_categoria": 4,
+        "company": "C4"
+    },
+    {
+        "id_categoria": 5,
+        "company": "C5"
+    },
+    {
+        "id_categoria": 7,
+        "company": "C7"
+    },
+    {
+        "id_categoria": 20,
+        "company": "C20"
+    },
+    {
+        "id_categoria": 21,
+        "company": "C21"
+    },
+    {
+        "id_categoria": 22,
+        "company": "C22"
+    },
+    {
+        "id_categoria": 24,
+        "company": "C24"
+    },
+    {
+        "id_categoria": 25,
+        "company": "C25"
+    },
+    {
+        "id_categoria": 42,
+        "company": "C42"
+    },
+    {
+        "id_categoria": 60,
+        "company": "C60"
+    },
+    {
+        "id_categoria": 62,
+        "company": "C62"
+    }
+
+]

@@ -109,7 +109,7 @@ export class listaSimple {
             aux = aux.siguiente
         }
         let contenido = contNodo + unionNodo
-        let codigodot = `digraph {
+        let codigodot = `digraph LSC{
             rankdir=LR
             ${contenido}
         }`
@@ -126,7 +126,7 @@ export class listaSimple {
         return this.ultimo.info
     }
     graphvizBlock(){
-        aux=this.primero
+        let aux=this.primero
         let contNodo =""
         let unionNodo=""
         let cont = 0
@@ -136,18 +136,18 @@ export class listaSimple {
             var prev=aux.info.GetDatos()["prev"];
             var rootM=aux.info.GetDatos()["root"];
             var transa = aux.info.GetDatos()["transact"];
-            contNodo = contNodo + `nodo_${cont} [${box} label="hash:${hash}\nprev:${prev}\nroot Merkle:${rootM}\ntransa:${transa}"]\n`
+            var nonce = aux.info.GetDatos()["nonce"];
+            contNodo = contNodo + `nodoLS_${cont} [${box} label="hash:${hash}\nprev:${prev}\nroot Merkle:${rootM}\ntransa:${transa}\nnonce:${nonce}"]\n`
             if (cont < this.tamano - 1) {
-                unionNodo = unionNodo + `nodo_${cont}->`
+                unionNodo = unionNodo + `nodoLS_${cont}->`
             } else {
-                unionNodo = unionNodo + `nodo_${cont}\n`
+                unionNodo = unionNodo + `nodoLS_${cont}\n`
             }
             cont++
             aux=aux.siguiente
         }
         let contenido = contNodo + unionNodo
-        let codigodot = `digraph {
-            rankdir=LR
+        let codigodot = `subgraph LSB{
             ${contenido}
         }`
         return codigodot

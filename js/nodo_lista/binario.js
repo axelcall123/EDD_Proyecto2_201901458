@@ -83,9 +83,58 @@ export class ABB {
             unionNodo = unionNodo + pilaUnion.pop()
         }
         let contenido = contNodo + unionNodo
-        let codigodot = `digraph {
+        let codigodot = `digraph BIN{
             ${contenido}
         }`
         return codigodot
+    }
+    GetHtml(orden){
+        let elementoL = new listaSimple()//<>
+        
+        if(orden=="in"){
+            //ORDEN
+            function gNIn_orden(nodo) {
+                if (nodo != null) {
+                    gNIn_orden(nodo.izquierda);
+                    elementoL.insertarP(_GetHtml(nodo))//get txt, incerta
+                    gNIn_orden(nodo.derecha);
+                }
+            }
+            gNIn_orden(this.raiz)
+        }
+        else if (orden == "pre") {
+            //PREOORDEN
+            function gNPreo_orden(nodo) {
+                if (nodo != null) {
+                    elementoL.insertarP(_GetHtml(nodo))//get txt, incerta
+                    gNPreo_orden(nodo.izquierda);
+
+                    gNPreo_orden(nodo.derecha);
+                }
+            }
+            gNPreo_orden(this.raiz)
+        }
+        else if (orden == "post") {    
+            //POST
+            function gNPost_orden(nodo) {
+                if (nodo != null) {
+                    gNPost_orden(nodo.izquierda);
+                    gNPost_orden(nodo.derecha);
+                    elementoL.insertarP(_GetHtml(nodo))//get txt, incerta
+                }
+            }
+            gNPost_orden(this.raiz)
+        }
+        
+        return { elemento: elementoL }
+    }
+    _GetHtml(nodo){
+        let nombre = nodo.info.GetDatos()["nombre_actor"]
+        let des = nodo.info.GetDatos()["descripcion"]
+        var elemento = `
+                <h4>${nombre}</h4>
+                <p><b>Descripcion:</b>${des}</p>
+            `
+        return elemento          
     }  
 }

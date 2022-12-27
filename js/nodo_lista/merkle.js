@@ -67,12 +67,12 @@ export class Merkle{
         function gNPre_orden(nodoAnt, nodo) {
             if (nodo != null) {
                 let hash = nodo.info.substr(0, 6)
-                pilaNodo.push(`nodo_${nodo.id} [${box} label="h:${hash}"]\n`)
+                pilaNodo.push(`nodoM_${nodo.id} [${box} label="h:${hash}"]\n`)
                 if (nodoAnt != "") {//dif primer nodo
-                    pilaUnion.push(`${nodoAnt}->nodo_${nodo.id}\n`)
+                    pilaUnion.push(`${nodoAnt}->nodoM_${nodo.id}\n`)
                 }
-                gNPre_orden(`nodo_${nodo.id}`, nodo.izquierda);
-                gNPre_orden(`nodo_${nodo.id}`, nodo.derecha);
+                gNPre_orden(`nodoM_${nodo.id}`, nodo.izquierda);
+                gNPre_orden(`nodoM_${nodo.id}`, nodo.derecha);
             }
         }
         gNPre_orden("", this.raiz)
@@ -85,7 +85,7 @@ export class Merkle{
             unionNodo = unionNodo + pilaUnion.pop()
         }
         let contenido = contNodo + unionNodo
-        let codigodot = `digraph {
+        let codigodot = `subgraph MERK{
             ${contenido}
         }`
         return codigodot

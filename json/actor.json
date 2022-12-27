@@ -1,0 +1,44 @@
+[
+    {
+        "dni":4,
+        "nombre_actor": "n4",
+        "correo": "c4@gmail.com",
+        "descripcion":"d4"
+    },
+    {
+        "dni": 2,
+        "nombre_actor": "n2",
+        "correo": "c2@gmail.com",
+        "descripcion": "d2"
+    },
+    {
+        "dni": 1,
+        "nombre_actor": "n1",
+        "correo": "c1@gmail.com",
+        "descripcion": "d1"
+    },
+    {
+        "dni": 3,
+        "nombre_actor": "n3",
+        "correo": "c3@gmail.com",
+        "descripcion": "d3"
+    },
+    {
+        "dni": 6,
+        "nombre_actor": "n6",
+        "correo": "c6@gmail.com",
+        "descripcion": "d6"
+    },
+    {
+        "dni": 5,
+        "nombre_actor": "n5",
+        "correo": "c5@gmail.com",
+        "descripcion": "d5"
+    },
+    {
+        "dni": 7,
+        "nombre_actor": "n7",
+        "correo": "c7@gmail.com",
+        "descripcion": "d7"
+    }
+]

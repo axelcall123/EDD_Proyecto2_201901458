@@ -8,26 +8,27 @@ export class AVL {
     }
     insertar(info) {
         this.raiz = this.add(info, this.raiz)
-        this.raiz.id=0
+        
     }
     add(info, tmp) {
-        if (tmp == null) { return new NodoB(info)} 
+        if (tmp == null) {
+            let nodo = new NodoB(info)
+            nodo.id=this.id
+            this.id++
+            return nodo
+        } 
         else if (info.GetDatos()["id_pelicula"]==tmp.info.GetDatos()["id_pelicula"]){
             return null
         }
         else if (info.GetDatos()["id_pelicula"] < tmp.info.GetDatos()["id_pelicula"]) {
             tmp.izquierda = this.add(info, tmp.derecha)
-            tmp.izquierda.id=this.id
-            this.id++
-
+            
             if ((this.tam(tmp.izquierda) - this.tam(tmp.derecha)) == 2) {
                 if (info.GetDatos()["id_pelicula"] < tmp.izquierda.info.GetDatos()["id_pelicula"]) tmp = this.srl(tmp)
                 else tmp = this.drl(tmp)
             }
         } else if (info.GetDatos()["id_pelicula"] > tmp.info.GetDatos()["id_pelicula"]) {
             tmp.derecha = this.add(info, tmp.derecha)
-            tmp.derecha.id = this.id
-            this.id++
             if ((this.tam(tmp.derecha) - this.tam(tmp.izquierda)) == 2) {
                 if (info.GetDatos()["id_pelicula"] > tmp.derecha.info.GetDatos()["id_pelicula"]) tmp = this.srr(tmp)
                 else tmp = this.drr(tmp)
@@ -129,7 +130,7 @@ export class AVL {
             unionNodo = unionNodo + pilaUnion.pop()
         }
         let contenido = contNodo + unionNodo
-        let codigodot = `digraph {
+        let codigodot = `digraph AVL{
             ${contenido}
         }`
         return codigodot
@@ -220,7 +221,7 @@ export class AVL {
         let ids = nodo.info.GetDatos()["id_pelicula"]
 
         //puntos estrellas
-        let estrella = Estrella(nodo.info.GetDatos()["puntuacion_star"])
+        let estrella = Estrella(nodo.info.GetDatos()["puntuacion"])
         //<pelicula punto>
         //b-mpp-modificar- button main pelicula modificar
         //b-mpp-alq- button main pelicula alquilar
@@ -265,7 +266,7 @@ export class AVL {
                 <input type="text" class="float-r" id="i-mpp-publicar-${id}">
             </div>
             <div class="col-md-4">
-                <button class="my-btn-u" id="b-mp-publicar" id="b-mpp-publicar-${id}">Publicar</button>
+                <button class="my-btn-u" id="b-mpp-publicar-${id}">Publicar</button>
             </div>
         `
 

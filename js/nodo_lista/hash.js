@@ -108,7 +108,7 @@ export class Hash{
             union1 = union1 + pilaRank.pop()
         }
         let contenido = contNodo + union1 + unionNodoAb
-        let codigodot = `digraph {
+        let codigodot = `digraph HASH{
             ${contenido}
         }`
         console.log(codigodot)

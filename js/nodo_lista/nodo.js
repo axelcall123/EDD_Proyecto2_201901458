@@ -9,5 +9,6 @@ export class NodoB {
         this.info = info;
         this.izquierda = null;
         this.derecha = null;
+        this.peso = 0
     }
 }

@@ -37,21 +37,19 @@ export function ordenAlfa(str1, str2) {
     }
 }
 export function Estrella(calificacion){
-    let cont=0
     let cali=""
     let nCali=""
     for(var i=0;i<5;i++){
-        if(cont<calificacion){
+        if(i<calificacion){
             cali = cali +"★"
         }else{
             nCali = nCali + "★"
         }
-        cont++
     }
     return {es:cali,nes:nCali}
 }
 
-export function blockChain(index,time,previous,root){
+export function blockChainH(index,time,previous,root){
     let nonce=0
     let str=""
     
@@ -63,6 +61,6 @@ export function blockChain(index,time,previous,root){
             nonce++
             str = hash(index + time + previous + root + nonce)
         }
-        return str
+        return { str: str ,nonce:nonce}
     }
 }

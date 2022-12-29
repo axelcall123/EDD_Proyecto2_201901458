@@ -124,3 +124,15 @@ input.puntuacion{
 .anav:hover {
     color: white;
 }
+/*ACTOR*/
+.d-artista-persona {
+    width: 200px;
+    float: left;
+}
+.b-a-persona {
+    width: 150px;
+    height: 150px;
+    border-radius: 25%;
+    background-color: rgb(115, 0, 185);
+    color: white;
+}

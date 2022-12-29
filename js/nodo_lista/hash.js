@@ -56,7 +56,6 @@ export class Hash{
         let pilaUNodoS = new listaSimple()//sig->sig->
         let pilaRank = new listaSimple()//rank=same
         for (var i = 0; i < this.tam; i++) {//abajo
-
             if(this.array[i]==null){//[x]
                 contNodo = contNodo + `nodo_${i} [${box} label="X"]\n`
                 rank=rank+`;nodo_${i}`
@@ -113,5 +112,28 @@ export class Hash{
         }`
         console.log(codigodot)
         return codigodot
+    }
+    GetHtml() {//FIXME:falta ls, html
+        let elementoL = new listaSimple()//<>
+        for (var i = 0; i < this.tam; i++) {//abajo
+            if (this.array[i] != null) {//[x]
+                let lsAux = this.array[i]
+                let nodo = lsAux.mostrar(null)
+                while (nodo != null) {
+                    let company = nodo.info.GetDatos()["company"]
+                    let elemento=`
+                    <div class="d-artista-persona">
+                        <button class="b-a-persona" disabled>
+                            ${company}
+                        </button>
+                    </div>`
+                    elementoL.insertarP(elemento)
+                    nodo=lsAux.mostrar(nodo)
+                }
+
+            }
+
+        }
+        return { elemento:elementoL}
     }
 }

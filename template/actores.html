@@ -14,22 +14,31 @@
     <title>Actores</title>
 </head>
 <body>
-    <div class="container" id="d-actores">
-        <div class="row">
-            <h3>Actores</h3>
-            <form action="">
-                <fieldset>
-                    <input type="checkbox" value="0">In Orden <br>
-                    <input type="checkbox" value="1">Pre Orden <br>
-                    <input type="checkbox" value="2">Post Orden <br>
-                </fieldset>
-            </form>
-
-            <h4>Nombre Autor</h4>
-            <p><b>Descripcion:</b>txt</p>
+    <div class="container" id="d-main">
+        <!--DANGER(ACTORES)-->
+        <!--ACTORES-->
+        <div class="container" id="d-m-actores">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Actores</h3>
+                    <form action="">
+                        <fieldset>
+                            <input type="checkbox" value="0" id="i-in">In Orden <br>
+                            <input type="checkbox" value="1" id="i-pre">Pre Orden <br>
+                            <input type="checkbox" value="2" id="i-post">Post Orden <br>
+                        </fieldset>
+                        <button type="button" class="my-btn-u" id="b-m-actor-ordenar">Ordenar</button>
+                    </form>
+                </div>
+                <div class="col-md-12" id="d-m-actor">
+                    <!--ACTORES-->
+                    <h4>Nombre Autor</h4>
+                    <p><b>Descripcion:</b>txt</p>
+                    
+                </div>
+            </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>

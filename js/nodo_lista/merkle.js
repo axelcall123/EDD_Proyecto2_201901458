@@ -27,7 +27,7 @@ export class Merkle{
         this._crearT(nivel,this.raiz)
     }
     _crearT(nivel,nodo){
-        if(nivel>=1){
+        if(nivel>=1){//para crear niveles
             nodo.izquierda = new NodoB(`S${nivel}I`)
             nodo.izquierda.id = this.id
             this.id++
@@ -41,7 +41,7 @@ export class Merkle{
         }else if(nivel==0){
             if(this.matriz.vacio()!=true){//sacar el hash
                 nodo.info=this.matriz.pop()
-            }else{//si me quede sin hash
+            }else{//si me quede sin info; añado mas
                 nodo.info="0"
             }
         }

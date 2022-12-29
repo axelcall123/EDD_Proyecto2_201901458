@@ -87,7 +87,7 @@ export class listaSimple {
         }//CONTRASEÑA MAL | ES NO ES ADMIN
         return { TF: false, nodo: aux }
     }
-    graphvizCt() {
+    graphvizCt() {//clientes
         let aux = this.primero
 
         let box = "shape=box"
@@ -115,7 +115,7 @@ export class listaSimple {
         }`
         return codigodot
     }
-    mostrar(nodo){//muestra uno a uno para
+    mostrar(nodo){//muestra uno a uno
         if(nodo==null){
             return this.primero
         }else{
@@ -125,7 +125,7 @@ export class listaSimple {
     GetUltimo(){
         return this.ultimo.info
     }
-    graphvizBlock(){
+    graphvizBlock(){//block chain
         let aux=this.primero
         let contNodo =""
         let unionNodo=""
@@ -137,7 +137,7 @@ export class listaSimple {
             var rootM=aux.info.GetDatos()["root"];
             var transa = aux.info.GetDatos()["transact"];
             var nonce = aux.info.GetDatos()["nonce"];
-            contNodo = contNodo + `nodoLS_${cont} [${box} label="hash:${hash}\nprev:${prev}\nroot Merkle:${rootM}\ntransa:${transa}\nnonce:${nonce}"]\n`
+            contNodo = contNodo + `nodoLS_${cont} [${box} label="index:${cont}\nhash:${hash}\nprev:${prev}\nrootMerkle:${rootM}\ntransa:\n{${transa}\n}\nnonce:${nonce}"]\n`
             if (cont < this.tamano - 1) {
                 unionNodo = unionNodo + `nodoLS_${cont}->`
             } else {

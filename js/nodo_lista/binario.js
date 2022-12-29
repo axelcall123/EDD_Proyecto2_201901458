@@ -88,9 +88,19 @@ export class ABB {
         }`
         return codigodot
     }
-    GetHtml(orden){
+    GetHtml(orden) {//FIXME:falta ls, html
         let elementoL = new listaSimple()//<>
-        
+
+        function _GetHtml(nodo) {
+            let nombre = nodo.info.GetDatos()["nombre_actor"]
+            let des = nodo.info.GetDatos()["descripcion"]
+            var elemento = `
+                <h4>${nombre}</h4>
+                <p><b>Descripcion:</b>${des}</p>
+            `
+            return elemento
+        } 
+
         if(orden=="in"){
             //ORDEN
             function gNIn_orden(nodo) {
@@ -128,13 +138,5 @@ export class ABB {
         
         return { elemento: elementoL }
     }
-    _GetHtml(nodo){
-        let nombre = nodo.info.GetDatos()["nombre_actor"]
-        let des = nodo.info.GetDatos()["descripcion"]
-        var elemento = `
-                <h4>${nombre}</h4>
-                <p><b>Descripcion:</b>${des}</p>
-            `
-        return elemento          
-    }  
+     
 }

@@ -1,7 +1,8 @@
+//let universales
 let logUser=null
-let strTrans=""//TODO:block
 let strTsaltos = ""//TODO:block
 let time = 300//TODO:block;;300seg
+//start()
 //IMPORTS
     //CLASES
 import { Cliente } from "./clases/cliente.js";
@@ -24,9 +25,15 @@ const avPelicula=new AVL()
 import { Hash } from "./nodo_lista/hash.js";
 const hCategoria=new Hash(0.75,20)
 import { Merkle } from "./nodo_lista/merkle.js";
-const merk=new Merkle()
-//OCULTOS
+let merk=new Merkle()
+    //OCULTOS
 const ocultoPageLogin = document.getElementById('d-login')
+
+const ocultoMActor = document.getElementById('d-m-actores')
+ocultoMActor.style.display = 'none';
+
+const ocultoMCategoria = document.getElementById('d-m-categoria')
+ocultoMCategoria.style.display = 'none';
 
 const ocultoPageMaster = document.getElementById('d-admin')
 ocultoPageMaster.style.display = 'none';
@@ -55,12 +62,13 @@ const btnOutMa = document.getElementById('b-out-main')
 const btnOutBl = document.getElementById('b-out-block')
     //MENU-GENERAR 
 const btnGenerarBlock = document.getElementById('b-a-generar')
-    //MAIN
-const btnMActores = document.getElementById('b-mm-actores')
-const btnMCategoria = document.getElementById('b-mm-categoria')
-    //LOGING 
+const btnGenerarAct = document.getElementById('b-m-actor-ordenar')
+const btnModificarT = document.getElementById('b-a-modificar') 
+    //LOGING
 const btnABlock = document.getElementById('b-a-block')   
 const btnLogin = document.getElementById('b_login')
+const btnActores = document.getElementById('b-mm-actores')
+const btnCategoria = document.getElementById('b-mm-categoria')
     //ADMIN-FILES
 const btnAFPelicula = document.getElementById('b-a-f-pelicula')
 const btnAFCliente = document.getElementById('b-a-f-cliente')
@@ -204,8 +212,8 @@ btnLogin.addEventListener('click', (e) => {
                     let peli=avPelicula.buscar(parseInt(e.target.id.replace("b-mpp-alq-","")))
                     let nombrePeli = peli.info.GetDatos()["nombre_pelicula"]
                     let nombreUser = logUser.info.GetDatos()["nombre_usuario"]
-                    strTrans = strTrans + `${nombreUser}-${nombrePeli}`//uno el mekle
-                    strTsaltos = strTsaltos + `${nombreUser}-${nombrePeli}\n`
+                    let precio = peli.info.GetDatos()["precion_Q"]
+                    strTsaltos = strTsaltos + `${nombreUser}-${nombrePeli}-${precio}\n`
                     merk.addLS(`${nombreUser}-${nombrePeli}`)
                 })
                 
@@ -221,11 +229,37 @@ btnABlock.addEventListener('click', (e) => {
     ocultoPMFiles.style.display = 'none';
     ocultoPMBlock.style.display = 'block';
     //mostrar grafica
-    merk.crear()//crea merkle
-    graphBlocks()
+    //merk.crear()//crea merkle
+    //graphBlocks()
+})
+    //LOGIN-ACTORES
+btnActores.addEventListener('click', (e) => {
+    ocultoPelicula.style.display = 'none';
+    ocultoMain.style.display = 'none'; 
+    ocultoMActor.style.display = 'block';
+    
+})
+    //LOGIN-CATEGORIAS
+btnCategoria.addEventListener('click', (e) => {
+    ocultoPelicula.style.display = 'none';
+    ocultoMain.style.display = 'none'; 
+    ocultoMCategoria.style.display = 'block';
+    let listaAux=hCategoria.GetHtml()
+
+    var padre = document.getElementById("d-m-categoria")//elimina hijos
+    while (padre.firstChild) {
+        padre.firstChild.remove()
+    }
+
+    document.getElementById('d-m-categoria').insertAdjacentHTML('beforeend',`<h5 class="center-text">CATEGORIA</h5>`)
+    while (listaAux["elemento"].vacio()!=true){
+        document.getElementById('d-m-categoria').insertAdjacentHTML('beforeend', listaAux["elemento"].pop())
+    }
 })
     //OUT-ADMIN
 btnOutAd.addEventListener('click', (e) => {
+    ocultoMCategoria.style.display = 'none';
+    ocultoMActor.style.display = 'none';
     ocultoPageMaster.style.display = 'none';
     ocultoPMBlock.style.display = 'none';
     ocultoPMFiles.style.display = 'none'; 
@@ -236,6 +270,8 @@ btnOutMa.addEventListener('click', (e) => {
     ocultoNav.style.display = 'none';
     ocultoPageMain.style.display = 'none';
     ocultoMain.style.display = 'none';
+    ocultoMCategoria.style.display = 'none';
+    ocultoMActor.style.display = 'none';
     ocultoPageLogin.style.display = 'block';
 })
     //OUT-BLOKCHAIN
@@ -243,17 +279,43 @@ btnOutBl.addEventListener('click', (e) => {
     ocultoPMBlock.style.display = 'none';
     ocultoPMFiles.style.display = 'block';
 })
+    //MAIN-GENERAR
+btnGenerarAct.addEventListener('click', (e) => {
+    const a = document.getElementById('i-in')
+    const b = document.getElementById('i-pre')
+    const c = document.getElementById('i-post')
+    var listaAux=null; 
+    if(a.checked){
+        listaAux=abActor.GetHtml("in")//=>lista simple
+    }
+    else if(b.checked){
+        listaAux=abActor.GetHtml("pre")//=>lista simple
+    }
+    else if(c.checked){
+        listaAux=abActor.GetHtml("post")//=>lista simple
+    }
+    var padre = document.getElementById("d-m-actor")//elimina hijos
+    while (padre.firstChild) {
+        padre.firstChild.remove()
+    }
+
+    while (listaAux["elemento"].vacio() != true) {
+        document.getElementById('d-m-actor').insertAdjacentHTML('beforeend', listaAux["elemento"].pop())
+    }
+
+})
     //MENU-GENERAR
 btnGenerarBlock.addEventListener('click', (e) => {
-    blockChain() 
+    blockChain()
+    stop()
+    start() 
 })
-    //MAIN-ACTORES
-btnMActores.addEventListener('click', (e) => {
-
-})
-    //MAIN-CATEGORIAS
-btnMCategoria.addEventListener('click', (e) => {
-
+    //CAMBIAR-TIME
+btnModificarT.addEventListener('click', (e) => {
+    stop()
+    const inpTimer=document.getElementById('i-a-modificar')
+    time = parseInt(inpTimer.value)
+    start()
 })
     //FILE-PELICULAS
 let inpAFPelicula = document.createElement('input'); inpAFPelicula.type = 'file';
@@ -405,24 +467,28 @@ btnAGCategoria.addEventListener('click', (e) => {
 function blockChain(){
     let today = new Date();
     let now = today.toLocaleString();
+    merk.crear()//crea merkle
+    let root = merk.GetRoot()
     if (lsBlock.tam() == 0) {//primer bloque
         //index,time,previous,root
-        let strHash = blockChainH(strTrans, now, "", merk.GetRoot())//funcion=>hash
+        let strHash = blockChainH(0, now, "", root)//funcion=>hash
         //hash,prev,root,transact,date,nonce
-        let bloque = new HH(strHash["str"], "", merk.GetRoot(), strTsaltos, now, strHash["nonce"])//clase
+        let bloque = new HH(strHash["str"], "00", root, strTsaltos, now, strHash["nonce"])//clase
         lsBlock.insertarU(bloque)
     } else {//n bloque        
         //index,time,previous,root
         let nodoInf = lsBlock.GetUltimo()//lista=>nodo.info
         let previo = nodoInf.GetDatos()["hash"]
-        let strHash = blockChainH(strTrans, now, previo, merk.GetRoot())//funcion=>hash
+        let strHash = blockChainH(lsBlock.tam(), now, previo, root)//funcion=>hash
         //hash,prev,root,transact,date,nonce
-        let bloque = new HH(strHash["str"], previo, merk.GetRoot(), strTsaltos, now, strHash["nonce"])//clase
+        let bloque = new HH(strHash["str"], previo, root, strTsaltos, now, strHash["nonce"])//clase
         lsBlock.insertarU(bloque)
     }
-    strTrans = ""
     strTsaltos = ""
     graphBlocks()
+    merk =null
+    merk = new Merkle()
+
 }
    //genera el graphivz bloques
 function graphBlocks() {
@@ -436,4 +502,20 @@ function graphBlocks() {
 
                 ${merk.graphviz()}
             }`)  
+}
+    //generar poco a poco
+const deletes=null
+function start() {
+    let timer=1000*time
+    /*deletes = */setInterval(gBlock, timer)
+}
+function stop() {
+     clearInterval(deletes)
+}
+let con = 0
+function gBlock() {
+    
+    blockChain()
+    console.log(`hi ${con}`)
+    con++
 }

@@ -3,7 +3,7 @@ let logUser=null
 let svgAnt=null
 let strTsaltos = ""//TODO:block
 let time = 300//TODO:block;;300seg
-//start()
+start()
 //IMPORTS
     //CLASES
 import { Cliente } from "./clases/cliente.js";

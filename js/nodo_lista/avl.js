@@ -133,6 +133,7 @@ export class AVL {
         let codigodot = `digraph AVL{
             ${contenido}
         }`
+        console.log(codigodot)
         return codigodot
     }
     GetHtml(){

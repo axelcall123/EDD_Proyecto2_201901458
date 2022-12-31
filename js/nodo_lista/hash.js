@@ -110,7 +110,6 @@ export class Hash{
         let codigodot = `digraph HASH{
             ${contenido}
         }`
-        console.log(codigodot)
         return codigodot
     }
     GetHtml() {//FIXME:falta ls, html

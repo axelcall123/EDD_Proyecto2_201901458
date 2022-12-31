@@ -1,0 +1,130 @@
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, monospace;
+            font-weight: 400;
+            line-height: 1.5;
+            background: #130C0E
+        }
+
+        circle {
+            stroke: #130C0E;
+            stroke-width: 5px;
+        }
+
+        .even {
+            fill: #00B0DD;
+        }
+
+        .odd {
+            fill: #FDBB30;
+        }
+
+        .active {
+            stroke: #A4CD39;
+            stroke-width: 20px;
+        }
+
+        /*// just for the buttons*/
+        .btn {
+            font-family: inherit;
+            font-size: .875rem;
+            font-weight: 700;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-block;
+            line-height: 1.125rem;
+            padding: .5rem 1rem;
+            margin: 0;
+            height: auto;
+            border: 1px solid transparent;
+            vertical-align: middle;
+            -webkit-appearance: none;
+            color: inherit;
+            background-color: transparent;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #7AC143;
+            border-radius: 3px;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary:hover {
+            box-shadow: inset 0 0 0 20rem #A4CD39;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chart">
+        <svg width="960" height="500"></svg>
+        <button class="btn btn-primary" onclick="svgToPng()">svg to png</button>
+        <button class="btn btn-primary" onclick="svgToSvg()">svg to svg (check console)</button>
+    </div>
+
+    <script src="//d3js.org/d3.v4.min.js"></script>
+
+    <script src="https://rawgit.com/exupero/saveSvgAsPng/gh-pages/saveSvgAsPng.js"></script>
+    <script>
+        // https://bl.ocks.org/mbostock/22994cc97fefaeede0d861e6815a847e
+        var svg = d3.select('svg'),
+            width = +svg.attr('width'),
+            height = +svg.attr('height'),
+            radius = 44;
+
+        var circles = d3.range(20).map(function() {
+          return {
+            x: Math.round(Math.random() * (width - radius * 2) + radius),
+            y: Math.round(Math.random() * (height - radius * 2) + radius)
+          };
+        });
+
+        svg.selectAll('circle')
+          .data(circles)
+          .enter().append('circle')
+            .attr('cx', function(d) { return d.x; })
+            .attr('cy', function(d) { return d.y; })
+            .attr('r', radius)
+            .attr('class', function(d, i) {
+                if (i % 2 === 0) {
+                    return 'even';
+                } else {
+                    return 'odd';
+                }
+            })
+            .call(d3.drag()
+                .on('start', dragstarted)
+                .on('drag', dragged)
+                .on('end', dragended));
+
+        function dragstarted(d) {
+          d3.select(this).raise().classed('active', true);
+        }
+
+        function dragged(d) {
+          d3.select(this).attr('cx', d.x = d3.event.x).attr('cy', d.y = d3.event.y);
+        }
+
+        function dragended(d) {
+          d3.select(this).classed('active', false);
+        }
+
+        // https://github.com/exupero/saveSvgAsPng
+        function svgToPng() {
+            saveSvgAsPng(d3.select('svg').node(), 'chart.png');
+        }
+        function svgToSvg() {
+            svgAsDataUri(d3.select('svg').node(), {}, function(uri) {
+                console.log('uri', uri);
+            });
+        }
+
+    </script>
+</body>
+
+</html>

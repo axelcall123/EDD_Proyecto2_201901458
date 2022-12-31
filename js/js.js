@@ -1,5 +1,6 @@
 //let universales
 let logUser=null
+let svgAnt=null
 let strTsaltos = ""//TODO:block
 let time = 300//TODO:block;;300seg
 //start()
@@ -56,6 +57,10 @@ ocultoMain.style.display = 'none';
 const ocultoPelicula = document.getElementById('d-m-pelicula')
 ocultoPelicula.style.display = 'none';
 //BOTONES
+    //DESCARGAR
+const btnDown = document.getElementById('b-m-descargar')
+    //MENU-MAXMIN 
+const btnMM = document.getElementById('b-mm-maxmin')
     //OUT 
 const btnOutAd = document.getElementById('b-out-admin')
 const btnOutMa = document.getElementById('b-out-main')
@@ -108,121 +113,15 @@ btnLogin.addEventListener('click', (e) => {
             ocultoPageLogin.style.display = "none";
             ocultoNav.style.display = 'block';
             ocultoPageMain.style.display = 'block';
-            //log user
-            var padre = document.getElementById("log-user")//elimina hijos
-            while (padre.firstChild) {
-                padre.firstChild.remove()
-            }
-            document.getElementById('log-user').insertAdjacentHTML('beforeend', logUser.info.GetDatos()["nombre_usuario"])
-            //display
-            ocultoMain.style.display = 'block';
-            //crear dinamicamente todo
-            padre = document.getElementById("d-mm-pel")//elmina hijos
-            while (padre.firstChild) {
-                padre.firstChild.remove()
-            }
-
-            let listaAux = avPelicula.GetHtml()
-            while (listaAux["id"].vacio()!=true){//peliculas
-                //depliego user por id
-                let idT = listaAux["id"].pop()
-                //despliego <elemento peliculas>
-                document.getElementById("d-mm-pel").insertAdjacentHTML('beforeend', listaAux["elementou"].pop())
-                //id btn;;info get id
-                let btnTemp = document.getElementById(`b-mmp-info-${idT}`)                
-                btnTemp.addEventListener('click', (e) => {
-                    //display page peliculas
-                    var padre = document.getElementById("d-mp-punto")//elimina hijos
-                    while (padre.firstChild) {
-                        padre.firstChild.remove()
-                    }
-                    padre = document.getElementById("d-mp-publicar")//elimina hijos
-                    while (padre.firstChild) {
-                        padre.firstChild.remove()
-                    }
-                    //
-                    let info = avPelicula.GetHtmlD(parseInt(e.target.id.replace("b-mmp-info-", "")))
-                    //oculto main
-                    ocultoMain.style.display = 'none';
-                    //muestro peliculas
-                    ocultoPelicula.style.display = 'block';
-                    //puntos estrellas
-                    document.getElementById("d-mp-punto").insertAdjacentHTML('beforeend', info["elementou"])
-                    //input, button publicar
-                    document.getElementById("d-mp-publicar").insertAdjacentHTML('beforeend', info["elementod"])
-                    //display comentarios
-                    let auxComentario = info["elementon"].info.GetComentario()//un nodo.info.GetComentario()
-                    let nodo = auxComentario.mostrar(null)
-                    padre = document.getElementById("d-mpc-publicacion")//elimina hijos
-                    while (padre.firstChild) {
-                        padre.firstChild.remove()
-                    }
-                    while (nodo != null) {//mostrar una uno->nodo
-                        nodo = auxComentario.mostrar(nodo)
-                        document.getElementById("d-mpc-publicacion").insertAdjacentHTML('beforeend', `<p class="center-text">${nodo.info}</p>`)
-                    }
-                    //id btn;modificar puntuacion
-                    let idInf = parseInt(e.target.id.replace("b-mmp-info-", ""))//solo id
-                    var btnTempT = document.getElementById(`b-mpp-modificar-${idInf}`)
-                    btnTempT.addEventListener('click', (e) => {
-                        //modificar
-                        let ids=parseInt(e.target.id.replace("b-mpp-modificar-", ""))//solo id
-                        let peli = avPelicula.buscar(ids)//nodo
-                        const inpModificar = document.getElementById(`i-mpp-es-${ids}`).value//get txt input
-                        let estrella = Estrella(parseInt(inpModificar))//tengo la estrellas txt
-
-                        padre = document.getElementById(`d-mpp-es-${ids}`)//elimina hijos
-                        while (padre.firstChild) {
-                            padre.firstChild.remove()
-                        }
-                        peli.info.SetPuntuacion(parseInt(inpModificar))
-                        document.getElementById(`d-mpp-es-${ids}`).insertAdjacentHTML('beforeend', `
-                            <p>
-                                <b class="starY">${estrella["es"]}</b>
-                                <b class="starB">${estrella["nes"]}</b>
-                            </p>
-                        `)
-                    })
-                    //id btn,publicar
-                    btnTempT = document.getElementById(`b-mpp-publicar-${idInf}`)
-                    btnTempT.addEventListener('click', (e) => {
-                        //publicar
-                        let ids = parseInt(e.target.id.replace("b-mpp-publicar-", ""))
-                        let peli = avPelicula.buscar(ids)//nodo(id)
-                        let input = document.getElementById(`i-mpp-publicar-${ids}`)//get  input
-                        
-                        peli.info.GetComentario().push(input.value)//comentario
-                        //main page comentario                    
-                        padre = document.getElementById("d-mpc-publicacion")//elimina hijos
-                        while (padre.firstChild) {
-                            padre.firstChild.remove()
-                        }
-                        nodo = peli.info.GetComentario().mostrar(null)
-                        while (nodo != null) {//mostrar una uno->nodo
-                            document.getElementById("d-mpc-publicacion").insertAdjacentHTML('beforeend', `<p class="center-text">${nodo.info}</p>`)
-                            nodo = peli.info.GetComentario().mostrar(nodo)
-                        }
-                    })
-                })
-                //id btn;;alquilar
-                btnTemp = document.getElementById(`b-mpp-alq-${idT}`)
-                btnTemp.addEventListener('click', (e) => {
-                    //alquilar user nombre;pelicula
-                    //convetir id a float
-                    let peli=avPelicula.buscar(parseInt(e.target.id.replace("b-mpp-alq-","")))
-                    let nombrePeli = peli.info.GetDatos()["nombre_pelicula"]
-                    let nombreUser = logUser.info.GetDatos()["nombre_usuario"]
-                    let precio = peli.info.GetDatos()["precion_Q"]
-                    strTsaltos = strTsaltos + `${nombreUser}-${nombrePeli}-${precio}\n`
-                    merk.addLS(`${nombreUser}-${nombrePeli}`)
-                })
-                
-            }
-            
+            impPeli("beforeend")
         }
     } else {//contram,user,admin esta mal
         //no ingreso
     }
+})
+    //DESCARGAR
+btnDown.addEventListener('click',(e)=>{
+    download(window.URL.createObjectURL(new Blob(['http://www.w3.org/2000/svg'], { type: 'image/png' })), 'img')
 })
     //LOGIN-BLOCKCHAIN
 btnABlock.addEventListener('click', (e) => {
@@ -232,14 +131,27 @@ btnABlock.addEventListener('click', (e) => {
     //merk.crear()//crea merkle
     //graphBlocks()
 })
-    //LOGIN-ACTORES
+    //MENU-MM
+btnMM.addEventListener('click', (e) => {
+    var e = document.getElementById("s-input");
+    var value = e.value;//value
+    var text = e.options[e.selectedIndex].text;//texto contiene
+    //beforeend->max-min 1=>10-0
+    //afterend->min-max 2=>0-10
+    if(value=="1"){
+        impPeli("beforeend")
+    }else{
+        impPeli("afterbegin")
+    }
+})
+    //MENU-ACTORES
 btnActores.addEventListener('click', (e) => {
     ocultoPelicula.style.display = 'none';
     ocultoMain.style.display = 'none'; 
     ocultoMActor.style.display = 'block';
     
 })
-    //LOGIN-CATEGORIAS
+    //MENU-CATEGORIAS
 btnCategoria.addEventListener('click', (e) => {
     ocultoPelicula.style.display = 'none';
     ocultoMain.style.display = 'none'; 
@@ -272,6 +184,7 @@ btnOutMa.addEventListener('click', (e) => {
     ocultoMain.style.display = 'none';
     ocultoMCategoria.style.display = 'none';
     ocultoMActor.style.display = 'none';
+    ocultoPelicula.style.display = 'none';
     ocultoPageLogin.style.display = 'block';
 })
     //OUT-BLOKCHAIN
@@ -312,10 +225,10 @@ btnGenerarBlock.addEventListener('click', (e) => {
 })
     //CAMBIAR-TIME
 btnModificarT.addEventListener('click', (e) => {
-    stop()
+    
     const inpTimer=document.getElementById('i-a-modificar')
-    time = parseInt(inpTimer.value)
-    start()
+    let nTime = parseInt(inpTimer.value)
+    changeTimer(nTime)
 })
     //FILE-PELICULAS
 let inpAFPelicula = document.createElement('input'); inpAFPelicula.type = 'file';
@@ -421,7 +334,7 @@ btnAGPelicula.addEventListener('click', (e) => {
     while (padre.firstChild) {
         padre.firstChild.remove()
     }*/
-    d3.select("#d-graph-scroll")
+    svgAnt =d3.select("#d-graph-scroll")
     .graphviz()
     .width(600)
     .height(400)
@@ -433,7 +346,7 @@ btnAGCliente.addEventListener('click', (e) => {
     while (padre.firstChild) {
         padre.firstChild.remove()
     }*/
-    d3.select("#d-graph-scroll")
+    svgAnt =d3.select("#d-graph-scroll")
     .graphviz()
     .width(600)
     .height(400)
@@ -445,7 +358,7 @@ btnAGActor.addEventListener('click', (e) => {
     while (padre.firstChild) {
         padre.firstChild.remove()
     }*/
-    d3.select("#d-graph-scroll")
+    svgAnt=d3.select("#d-graph-scroll")
     .graphviz()
     .width(600)
     .height(400)
@@ -457,7 +370,7 @@ btnAGCategoria.addEventListener('click', (e) => {
     while (padre.firstChild) {
         padre.firstChild.remove()
     }*/
-    d3.select("#d-graph-scroll")
+    svgAnt=d3.select("#d-graph-scroll")
     .graphviz()
     .width(600)
     .height(400)
@@ -503,19 +416,139 @@ function graphBlocks() {
                 ${merk.graphviz()}
             }`)  
 }
-    //generar poco a poco
-const deletes=null
+    //generar poco a poco->timer
+var deletes=null
 function start() {
-    let timer=1000*time
-    /*deletes = */setInterval(gBlock, timer)
+    deletes = setInterval(gBlock, 1000*time)
+}
+function changeTimer(nTime) {
+    clearInterval(deletes)
+    time=nTime
+    start()
 }
 function stop() {
-     clearInterval(deletes)
+    clearInterval(deletes)
+    start()
 }
 let con = 0
 function gBlock() {
     
     blockChain()
-    console.log(`hi ${con}`)
+    console.log(`hi ${con}->${1000*time}`)
     con++
+}
+
+//beforeend->max-min
+//afterend->min-max
+function impPeli(impresion){
+    //log user
+    var padre = document.getElementById("log-user")//elimina hijos
+    while (padre.firstChild) {
+        padre.firstChild.remove()
+    }
+    document.getElementById('log-user').insertAdjacentHTML('beforeend', logUser.info.GetDatos()["nombre_usuario"])
+    //display
+    ocultoMain.style.display = 'block';
+    //crear dinamicamente todo
+    padre = document.getElementById("d-mm-pel")//elmina hijos
+    while (padre.firstChild) {
+        padre.firstChild.remove()
+    }
+
+    let listaAux = avPelicula.GetHtml()
+    while (listaAux["id"].vacio() != true) {//peliculas
+        //depliego user por id
+        let idT = listaAux["id"].pop()
+        //despliego <elemento peliculas>
+        document.getElementById("d-mm-pel").insertAdjacentHTML(impresion, listaAux["elementou"].pop())
+        //id btn;;info get id
+        let btnTemp = document.getElementById(`b-mmp-info-${idT}`)
+        btnTemp.addEventListener('click', (e) => {
+            //display page peliculas
+            var padre = document.getElementById("d-mp-punto")//elimina hijos
+            while (padre.firstChild) {
+                padre.firstChild.remove()
+            }
+            padre = document.getElementById("d-mp-publicar")//elimina hijos
+            while (padre.firstChild) {
+                padre.firstChild.remove()
+            }
+            //
+            let info = avPelicula.GetHtmlD(parseInt(e.target.id.replace("b-mmp-info-", "")))
+            //oculto main
+            ocultoMain.style.display = 'none';
+            //muestro peliculas
+            ocultoPelicula.style.display = 'block';
+            //puntos estrellas
+            document.getElementById("d-mp-punto").insertAdjacentHTML('beforeend', info["elementou"])
+            //input, button publicar
+            document.getElementById("d-mp-publicar").insertAdjacentHTML('beforeend', info["elementod"])
+            //display comentarios
+            let auxComentario = info["elementon"].info.GetComentario()//un nodo.info.GetComentario()
+            let nodo = auxComentario.mostrar(null)
+            padre = document.getElementById("d-mpc-publicacion")//elimina hijos
+            while (padre.firstChild) {
+                padre.firstChild.remove()
+            }
+            while (nodo != null) {//mostrar una uno->nodo
+                document.getElementById("d-mpc-publicacion").insertAdjacentHTML('beforeend', `<p class="center-text">${nodo.info}</p>`)
+                nodo = auxComentario.mostrar(nodo)
+            }
+            //id btn;modificar puntuacion
+            let idInf = parseInt(e.target.id.replace("b-mmp-info-", ""))//solo id
+            var btnTempT = document.getElementById(`b-mpp-modificar-${idInf}`)
+            btnTempT.addEventListener('click', (e) => {
+                //modificar
+                let ids = parseInt(e.target.id.replace("b-mpp-modificar-", ""))//solo id
+                let peli = avPelicula.buscar(ids)//nodo
+                const inpModificar = document.getElementById(`i-mpp-es-${ids}`).value//get txt input
+                let estrella = Estrella(parseInt(inpModificar))//tengo la estrellas txt
+
+                padre = document.getElementById(`d-mpp-es-${ids}`)//elimina hijos
+                while (padre.firstChild) {
+                    padre.firstChild.remove()
+                }
+                peli.info.SetPuntuacion(parseInt(inpModificar))
+                document.getElementById(`d-mpp-es-${ids}`).insertAdjacentHTML('beforeend', `
+                            <p>
+                                <b class="starY">${estrella["es"]}</b>
+                                <b class="starB">${estrella["nes"]}</b>
+                            </p>
+                        `)
+            })
+            //id btn,publicar
+            btnTempT = document.getElementById(`b-mpp-publicar-${idInf}`)
+            btnTempT.addEventListener('click', (e) => {
+                //publicar
+                let ids = parseInt(e.target.id.replace("b-mpp-publicar-", ""))
+                let peli = avPelicula.buscar(ids)//nodo(id)
+                let input = document.getElementById(`i-mpp-publicar-${ids}`)//get  input
+
+                peli.info.GetComentario().push(input.value)//comentario
+                //main page comentario                    
+                padre = document.getElementById("d-mpc-publicacion")//elimina hijos
+                while (padre.firstChild) {
+                    padre.firstChild.remove()
+                }
+                nodo = peli.info.GetComentario().mostrar(null)
+                while (nodo != null) {//mostrar una uno->nodo
+                    document.getElementById("d-mpc-publicacion").insertAdjacentHTML('beforeend', `<p class="center-text">${nodo.info}</p>`)
+                    nodo = peli.info.GetComentario().mostrar(nodo)
+                }
+            })
+        })
+        //id btn;;alquilar
+        btnTemp = document.getElementById(`b-mpp-alq-${idT}`)
+        btnTemp.addEventListener('click', (e) => {
+            //alquilar user nombre;pelicula
+            //convetir id a float
+            let peli = avPelicula.buscar(parseInt(e.target.id.replace("b-mpp-alq-", "")))
+            let nombrePeli = peli.info.GetDatos()["nombre_pelicula"]
+            let nombreUser = logUser.info.GetDatos()["nombre_usuario"]
+            let precio = peli.info.GetDatos()["precion_Q"]
+            strTsaltos = strTsaltos + `${nombreUser}-${nombrePeli}-${precio}\n`
+            merk.addLS(`${nombreUser}-${nombrePeli}`)
+        })
+
+    }
 }

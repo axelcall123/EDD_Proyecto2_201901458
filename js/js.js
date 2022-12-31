@@ -121,7 +121,7 @@ btnLogin.addEventListener('click', (e) => {
 })
     //DESCARGAR
 btnDown.addEventListener('click',(e)=>{
-    download(window.URL.createObjectURL(new Blob(['http://www.w3.org/2000/svg'], { type: 'image/png' })), 'img')
+    saveSvgAsPng(document.getElementsByTagName("svg")[0], 'myDrawing.png');
 })
     //LOGIN-BLOCKCHAIN
 btnABlock.addEventListener('click', (e) => {

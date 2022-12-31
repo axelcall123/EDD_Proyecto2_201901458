@@ -1,5 +1,4 @@
 import { Merkle } from "./nodo_lista/merkle.js"
-
 const btn = document.getElementById('add')
 let detener=true
 var deletes=null
@@ -23,7 +22,7 @@ nodo_2->nodo_4
 nodo_2->nodo_1
 }
 `
-btn.addsEventListener('click', (e) => {
+btn.addEventListener('click', (e) => {
     // if(detener==true) {
     //     start();
     //     detener=false}
@@ -33,13 +32,13 @@ btn.addsEventListener('click', (e) => {
     // download(window.URL.createObjectURL(new Blob(['code of inline SVG'], { type: 'image/png' })), 'img'); 
     // downloadPNG()
     // stop()
-    let type=d3.select("#lienzo")
-        .graphviz()
+    d3.select("#lienzo")
+        .graphviz() 
         .width(600)
         .height(400)
         .renderDot(str)
-
-    saveSvgAsPng(d3.select('svg').node(), 'myDrawing.png');
+    
+    
 })
 
 function start(){

@@ -1,67 +1,129 @@
-import { Merkle } from "./nodo_lista/merkle.js"
-const btn = document.getElementById('add')
-let detener=true
-var deletes=null
-let intervalo=1000
-// start()
-let str=`
-digraph AVL{
-nodo_5 [label="id:5
-n:n5"]
-nodo_3 [label="id:3
-n:n3"]
-nodo_4 [label="id:4
-n:n4"]
-nodo_1 [label="id:1
-n:n1"]
-nodo_2 [label="id:2
-n:n2"]
-nodo_4->nodo_5
-nodo_4->nodo_3
-nodo_2->nodo_4
-nodo_2->nodo_1
+class Node {
+    constructor(value) {
+        this.value = value
+        this.left = null
+        this.right = null
+        this.height = 0
+    }
 }
-`
+
+class AVL {
+    constructor() {
+        this.root = null
+        this.dot = ''
+    }
+
+    add(value) {
+        this.root = this._add(value, this.root)
+    }
+
+    _add(value, tmp) {
+        if (tmp == null) return new Node(value)
+        else if (value < tmp.value) {
+            tmp.left = this._add(value, tmp.left)
+            if ((this.height(tmp.left) - this.height(tmp.right)) == 2) {
+                if (value < tmp.left.value) tmp = this.srl(tmp)
+                else tmp = this.drl(tmp)
+            }
+        } else if (value > tmp.value) {
+            tmp.right = this._add(value, tmp.right)
+            if ((this.height(tmp.right) - this.height(tmp.left)) == 2) {
+                if (value > tmp.right.value) tmp = this.srr(tmp)
+                else tmp = this.drr(tmp)
+            }
+        }
+
+        var r = this.height(tmp.right)
+        var l = this.height(tmp.left)
+        var m = this.max(r, l)
+        tmp.height = m + 1
+        return tmp
+    }
+
+    height(tmp) {
+        if (tmp == null) return -1
+        return tmp.height
+    }
+
+    max(val1, val2) {
+        if (val1 > val2) return val1
+        return val2
+    }
+
+    srl(t1) {
+        var t2
+        t2 = t1.left
+        t1.left = t2.right
+        t2.right = t1
+        t1.height = this.max(this.height(t1.right), this.height(t1.left)) + 1
+        t2.height = this.max(this.height(t2.left), t1.height) + 1
+        return t2
+    }
+
+    drl(tmp) {
+        tmp.left = this.srr(tmp.left)
+        return this.srl(tmp)
+    }
+
+    srr(t1) {
+        var t2
+        t2 = t1.right
+        t1.right = t2.left
+        t2.left = t1
+        t1.height = this.max(this.height(t1.left), this.height(t1.right)) + 1
+        t2.height = this.max(this.height(t2.right), t1.height) + 1
+        return t2
+    }
+
+    drr(tmp) {
+        tmp.right = this.srl(tmp.right)
+        return this.srr(tmp)
+    }
+
+
+    preorder(tmp) {
+        if (tmp != null) {
+            document.getElementById("log").innerHTML += tmp.value + ' '
+            this.preorder(tmp.left)
+            this.preorder(tmp.right)
+        }
+    }
+    in_order() {
+        this.inorder(this.root)
+    }
+    inorder(tmp) {
+        if (tmp != null) {
+            this.inorder(tmp.left)
+            console.log(tmp.value)
+            this.inorder(tmp.right)
+        }
+    }
+
+    postorder(tmp) {
+        if (tmp != null) {
+            this.postorder(tmp.left)
+            this.postorder(tmp.right)
+            document.getElementById("log").innerHTML += tmp.value + ' '
+        }
+    }
+}
+
+function avl() {
+    var avl = new AVL()
+    avl.add(100)
+    avl.add(90)
+    avl.add(80)
+    avl.add(70)
+    avl.add(60)
+    avl.add(50)
+    avl.add(40)
+    avl.in_order()
+}
+
+
+
+const btn = document.getElementById('add')
 btn.addEventListener('click', (e) => {
-    // if(detener==true) {
-    //     start();
-    //     detener=false}
-    // else{
-    //     stop();
-    //     detener=true}
-    // download(window.URL.createObjectURL(new Blob(['code of inline SVG'], { type: 'image/png' })), 'img'); 
-    // downloadPNG()
-    // stop()
-    d3.select("#lienzo")
-        .graphviz() 
-        .width(600)
-        .height(400)
-        .renderDot(str)
-    
-    
+    avl()
 })
 
-function start(){
-     deletes= setInterval(a, intervalo)
-}
-function stop(){
-    clearInterval(deletes)
-    intervalo=intervalo*1.5
-    start()
-}
-let con = 0
-function a() {
-    console.log(`hi ${con}->${intervalo}`)
-    //lienzo
-    con++
-}
-function download(href, name) {
-    var a = document.createElement('a');
-
-    a.download = name;
-    a.href = href;
-
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-}

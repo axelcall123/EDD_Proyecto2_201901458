@@ -21,7 +21,7 @@ export class AVL {
             return null
         }
         else if (info.GetDatos()["id_pelicula"] < tmp.info.GetDatos()["id_pelicula"]) {
-            tmp.izquierda = this.add(info, tmp.derecha)
+            tmp.izquierda = this.add(info, tmp.izquierda)
             
             if ((this.tam(tmp.izquierda) - this.tam(tmp.derecha)) == 2) {
                 if (info.GetDatos()["id_pelicula"] < tmp.izquierda.info.GetDatos()["id_pelicula"]) tmp = this.srl(tmp)
@@ -54,8 +54,8 @@ export class AVL {
         t2 = t1.izquierda
         t1.izquierda = t2.derecha
         t2.derecha = t1
-        t1.peso = max(this.tam(t1.izquierda), this.tam(t1.derecha)) + 1
-        t2.peso = max(this.tam(t2.izquierda), t1.peso) + 1
+        t1.peso = this.max(this.tam(t1.izquierda), this.tam(t1.derecha)) + 1
+        t2.peso = this.max(this.tam(t2.izquierda), t1.peso) + 1
         return t2
     }
     drl(nodo) {

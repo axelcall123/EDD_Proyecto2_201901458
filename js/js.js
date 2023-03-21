@@ -243,7 +243,16 @@ inpAFPelicula.addEventListener('change', function () {//cambia (e)=> a funciont(
     fr.onload = function () {
         const jsonObj = JSON.parse(fr.result)
         jsonObj.forEach(element => {
-            console.log("#")
+            let clase = new Pelicula(
+                parseInt(element["id_pelicula"]),
+                element["nombre_pelicula"],
+                element["descripcion"],
+                parseInt(element["puntuacion"]),
+                parseInt(element["precion_Q"]),
+                parseInt(element["paginas"]),
+                element["categoria"]
+            )
+            avPelicula.insertar(clase)
         });
     }
     fr.readAsText(this.files[0])
